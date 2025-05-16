@@ -1,0 +1,104 @@
+/* src/components/SavedPost.css */
+.main-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-width: 99vw;
+}
+
+.saved-posts-container {
+  flex: 1;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-width: 450px;
+  min-width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 equal columns */
+  gap: 1rem;
+}
+
+
+
+/* .saved-posts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+} */
+
+.saved-post-card {
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+}
+
+.card-content {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.card-location {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.card-tag {
+  font-size: 12px;
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #555;
+}
+
+.no-saved {
+  font-size: 16px;
+  color: #555;
+  margin: 2rem;
+}
+
+.postMenu {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 5px 0;
+  width: 100px;
+  z-index: 10;
+}
+
+.saveIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  cursor: pointer;
+}

@@ -1,0 +1,89 @@
+/* register.css */
+
+.register-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 93.5vh;
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  padding: 20px;
+}
+
+.register-box {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.register-logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #4f46e5;
+  margin-bottom: 10px;
+}
+
+.register-desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.register-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+}
+
+.register-input:focus {
+  border-color: #4f46e5;
+  outline: none;
+  box-shadow: 0 0 5px rgba(79, 70, 229, 0.3);
+}
+
+.register-button,
+.register-login-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.register-button {
+  background-color: #4f46e5;
+}
+
+.register-button:hover {
+  background-color: #4338ca;
+}
+
+.register-login-button {
+  background-color: #10b981;
+}
+
+.register-login-button:hover {
+  background-color: #059669;
+}
+
+.register-login-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}

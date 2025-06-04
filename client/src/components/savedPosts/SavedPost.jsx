@@ -1,5 +1,5 @@
 // src/components/SavedPost.jsx
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../../context/AuthContext'
@@ -9,7 +9,6 @@ import { ToastContainer } from 'react-toastify'
 import ConfirmModal from '../confirmModal/confirmModal'
 import Topbar from '../topbar/Topbar'
 import './SavedPost.css'
-import Sidebar from '../sidebar/Sidebar'
 
 const DESCRIPTION_LIMIT = 100
 const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -19,17 +18,43 @@ export default function SavedPost() {
   const [savedPosts, setSavedPosts] = useState([])
   const [commentsOpen, setCommentsOpen] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  // const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpenPostId, setMenuOpenPostId] = useState(null)
+
   const [readMore, setReadMore] = useState(false)
   const [likeCounts, setLikeCounts] = useState({}) // track per-post likes
   const [isLiked, setIsLiked] = useState({})
   const [isSaved, setIsSaved] = useState({})
-  const [fetchData,setFetchData] = useState(false)
+  const [fetchData, setFetchData] = useState(false)
 
 
   const backend_url = process.env.BACKEND_URL || 'http://localhost:4000/api'
 
-  
+  const iconRef = useRef(null);
+  const menuRef = useRef(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        iconRef.current &&
+        !iconRef.current.contains(event.target)
+      ) {
+        setMenuOpenPostId(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
+
 
   useEffect(() => {
     const userId = currentUser?._id
@@ -73,7 +98,7 @@ export default function SavedPost() {
     try {
       const res = await axios.put(`${backend_url}/posts/${postId}/save`, { userId: currentUser._id })
       // console.log("response check in toggle save::", res.status)
-      if(res.status==200){
+      if (res.status == 200) {
         setFetchData(!fetchData)
       }
       setIsSaved(prev => ({ ...prev, [postId]: !prev[postId] }))
@@ -82,7 +107,7 @@ export default function SavedPost() {
       console.error(err)
     }
   }
-  console.log("fetch data verification::",fetchData)
+  console.log("fetch data verification::", fetchData)
 
   const handleDelete = () => {
     setShowDeleteModal(true)
@@ -94,12 +119,12 @@ export default function SavedPost() {
   }
 
   useEffect(() => {
-          if (savedPosts?.savedBy?.includes(currentUser._id)) {
-              setIsSaved(true);
-          } else {
-              setIsSaved(false);
-          }
-      }, [savedPosts?.savedBy, currentUser._id]);
+    if (savedPosts?.savedBy?.includes(currentUser._id)) {
+      setIsSaved(true);
+    } else {
+      setIsSaved(false);
+    }
+  }, [savedPosts?.savedBy, currentUser._id]);
 
   return (
     <>
@@ -134,32 +159,43 @@ export default function SavedPost() {
                       </div>
                     </div>
                     <div className="postTopRight">
-                       <img
-                          onClick={() => (setIsSaved(!isSaved),toggleSave(post._id))}
-                          className="saveIcon"
-                          // src={PF +(`/icons/${isSaved[post._id] ? 'saved.png' : 'save.png'}`)}
-                          src={PF + (isSaved ? "saved.png" : "save.png")}
+                      <img
+                        onClick={() => (setIsSaved(!isSaved), toggleSave(post._id))}
+                        className="saveIcon"
+                        // src={PF +(`/icons/${isSaved[post._id] ? 'saved.png' : 'save.png'}`)}
+                        src={PF + (isSaved ? "saved.png" : "save.png")}
 
-                          alt={isSaved[post._id] ? 'saved' : 'save'}
-                        />
-                      <MoreVertical
+                        alt={isSaved[post._id] ? 'saved' : 'save'}
+                      />
+                      {/* <MoreVertical
                         className="postMoreVert"
                         onClick={() => setMenuOpen(prev => !prev)}
-                      />
-                      {menuOpen && (
-                        <div className="postMenu">
-                          {/* <div
+                      /> */}
+                      {/* {menuOpen && (
+                        <div className="postMenu"> */}
+                      {/* <div
                             className="postMenuItem"
                             onClick={() => toggleSave(post._id)}
                           >
                             {isSaved[post._id] ? 'Unsave' : 'Save'}
                           </div> */}
-                          {/* <div className="postMenuItem" onClick={handleDelete}>
+                      {/* <div className="postMenuItem" onClick={handleDelete}>
                             Delete Post
                           </div> */}
+                      {/* <div className="postMenuItem">Report</div>
+                        </div>
+                      )} */}
+                      <MoreVertical
+                        ref={iconRef}
+                        className="postMoreVert"
+                        onClick={() => setMenuOpenPostId(prev => (prev === post._id ? null : post._id))}
+                      />
+                      {menuOpenPostId === post._id && (
+                        <div className="postMenu" ref={menuRef}>
                           <div className="postMenuItem">Report</div>
                         </div>
                       )}
+
                     </div>
                   </div>
                   <div className="postCenter">
@@ -199,7 +235,7 @@ export default function SavedPost() {
                             {likeCounts[post._id]} likes
                           </span>
                         </div>
-                       
+
                         <span
                           className="postCommentText"
                           onClick={() => setCommentsOpen(prev => !prev)}

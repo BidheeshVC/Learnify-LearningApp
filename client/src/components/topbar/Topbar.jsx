@@ -6,12 +6,24 @@ import ChatIcon from "@mui/icons-material/Chat";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { Logout } from "../../context/AuthActions"; // Import the Logout action
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook for navigation
+
 
 export default function Topbar() {
 
+  const { dispatch } = useContext(AuthContext);
+
   const { currentUser } = useContext(AuthContext)
+
+  const navigate = useNavigate(); // useNavigate hook to programmatically navigate
   // console.log("currentUser in topbar component: ", currentUser);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const handleLogout = () => {
+    dispatch(Logout());  // this will call reducer and remove the user
+    navigate("/login");
+  };
 
 
 
@@ -79,9 +91,15 @@ export default function Topbar() {
             <NotificationsIcon />
             <span className="topbarIconBadge">1</span>
           </div>
+          <div className="topbarIconItem">
+            <button onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+
         </div>
-        <Link to={`/profile/` }>
-         <img
+        <Link to={`/profile/`}>
+          <img
             src={currentUser?.profilePicture ? currentUser.profilePicture : PF + "/persons/person2.jpeg"}
             alt=""
             className="topbarImg"

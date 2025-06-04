@@ -1,0 +1,158 @@
+/* Grid Layout */
+.card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 32px;
+  background: linear-gradient(135deg, #fdfcfb, #e2d1c3);
+}
+
+/* Card Styling */
+.card {
+  background: linear-gradient(145deg, #f0f4f8, #e0e7ff);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Container */
+.card-image-container {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-image:hover {
+  transform: scale(1.06);
+}
+
+/* Price Tags */
+.price-tag {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.price-tag.free {
+  background: linear-gradient(to right, #34d399, #10b981);
+  color: white;
+}
+
+.price-tag.paid {
+  background: linear-gradient(to right, #ec4899, #f97316);
+  color: white;
+}
+
+/* Content */
+.card-content {
+  padding: 20px;
+}
+
+/* Header Row */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* Category Badge */
+.category {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  background: linear-gradient(to right, #c084fc, #8b5cf6);
+  color: white;
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #facc15;
+  font-size: 0.9rem;
+}
+
+/* Title */
+.card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1e293b;
+}
+
+/* Description */
+.card-description {
+  font-size: 0.95rem;
+  color: #334155;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+/* Meta Info */
+.card-meta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;
+  color: #475569;
+  font-size: 0.85rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* CTA Button */
+.card-button {
+  width: 100%;
+  background: linear-gradient(to right, #4f46e5, #ec4899);
+  color: white;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
+}
+
+/* Icons */
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.star {
+  fill: currentColor;
+}

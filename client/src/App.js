@@ -8,6 +8,7 @@ import { AuthContext } from './context/AuthContext'
 import './index.css'; // or './App.css'
 import SavedPost from './components/savedPosts/SavedPost'
 import SavePostPage from './pages/savePosts/SavePostPage'
+import CoursesPage from './pages/courses/CoursesPage'
 
 
 
@@ -31,6 +32,8 @@ const App = () => {
           <Route path={`/profile`} element={<Profile />} />
 
           <Route path={`/savedposts`} element={<SavePostPage/>} />
+
+          <Route path={`/courses`} element={<CoursesPage/>} />
         </Routes>
       </Router>
     </>

@@ -10,6 +10,7 @@ const path = require('path');
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const PostRoute = require("./routes/post");
+const CommentRoute = require("./routes/comment");
 
 // Load environment variables first!
 dotenv.config();
@@ -93,6 +94,7 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", PostRoute);
+app.use("/api/comments", CommentRoute);
 
 // Routes
 app.get("/", (req, res) => {

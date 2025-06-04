@@ -1,5 +1,6 @@
 // controllers/postController/postController.js
 
+const Comment = require("../../models/Comment");
 const Post = require("../../models/Post");
 const User = require("../../models/User");
 
@@ -115,17 +116,25 @@ const getAllPosts = async (req, res) => {
     try {
         const posts = await Post.find().sort({ createdAt: -1 }); // Sort by newest first
         // const posts = await Post.find();
+        // console.log("first posts list", posts)
         const postsWithUserDetails = await Promise.all(
             posts.map(async (post) => {
                 const user = await User.findById(post.userId);
+                // Fetch all comments for this post
+                const comments = await Comment.find({ postId: post._id });
                 return {
                     ...post._doc,
                     username: user.username,
                     profilePicture: user.profilePicture,
                     coverPicture: user.coverPicture,
+                    commentCount: comments?.length || 0, // Add comment count to the post
+                    comments: comments || [], // Include comments in the post
+                    createdAt: post.createdAt,
+
                 };
             })
         );
+        console.log("posts with user details", postsWithUserDetails)
         res.status(200).json(postsWithUserDetails);
     } catch (err) {
         res.status(500).json(err);

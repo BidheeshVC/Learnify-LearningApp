@@ -55,10 +55,12 @@ export default function Sidebar() {
                         <EventIcon className="sidebarIcon" />
                         <span className="sidebarListItemText">Events</span>
                     </li>
-                    <li className="sidebarListItem">
-                        <SchoolIcon className="sidebarIcon" />
-                        <span className="sidebarListItemText">Courses</span>
-                    </li>
+                    <Link to="courses">
+                        <li className="sidebarListItem">
+                            <SchoolIcon className="sidebarIcon" />
+                            <span className="sidebarListItemText">Courses</span>
+                        </li>
+                    </Link>
                 </ul>
                 <button className="sidebarButton">Show More</button>
                 <hr className="sidebarHr" />

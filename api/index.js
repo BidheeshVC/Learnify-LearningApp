@@ -20,7 +20,8 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const URI = process.env.MongoDBURI; // Moved here, before using in mongoose.connect
 
-// Allow requests from http://localhost:3000
+// Middleware to handle CORS
+// This allows your server to accept requests from different origins
 app.use(cors({
     origin: '*'
 }));

@@ -67,8 +67,6 @@ const deletePost = async (req, res) => {
 };
 
 
-
-
 // LIKE/DISLIKE POST
 const likePost = async (req, res) => {
     try {

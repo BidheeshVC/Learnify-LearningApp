@@ -20,13 +20,7 @@ export default function Topbar() {
   // console.log("currentUser in topbar component: ", currentUser);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const handleLogout = () => {
-    dispatch(Logout());  // this will call reducer and remove the user
-    navigate("/login");
-  };
-
-
-
+ 
   // const [user, setUser] = useState(null); // to store user data from local storage
 
   // get user data from local storage
@@ -92,9 +86,7 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
           <div className="topbarIconItem">
-            <button onClick={handleLogout}>
-              Logout
-            </button>
+           
           </div>
 
         </div>

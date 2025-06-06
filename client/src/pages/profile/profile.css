@@ -48,3 +48,19 @@
 .profileRightBottom{
     display: flex;
 }
+
+.followButton {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #1877f2;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.followButton:hover {
+    background-color: #155cc1;
+}

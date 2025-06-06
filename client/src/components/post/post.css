@@ -60,7 +60,7 @@
 
 .postMenu {
   position: absolute;
-  top: 40px;
+  top: 0px;
   right: 0;
   background-color: #fff;
   border: 1px solid #e0e0e0;
@@ -72,6 +72,7 @@
   z-index: 100;
   opacity: 0;
   transform: translateY(-10px);
+  margin-top: -40px;
 }
 
 @keyframes slideFadeIn {

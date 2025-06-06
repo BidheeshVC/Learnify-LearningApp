@@ -88,7 +88,7 @@ export default function Post({ post, user, triggerRefresh }) {
 
     useEffect(() => {
         fetchComments(); // Fetch comments when post is loaded
-        console.log("------------------------------------ ")
+        // console.log("------------------------------------ ")
     }, [])
 
     // Fetch all comments for the current post
@@ -300,6 +300,7 @@ export default function Post({ post, user, triggerRefresh }) {
                                                         }}>
                                                         Delete
                                                     </div>
+                                                    <div className="postMenuItem">Edit</div>
                                                     <div className="postMenuItem">Report</div>
                                                 </div>
                                             )}

@@ -38,6 +38,9 @@ const createPost = async (req, res) => {
 
 // UPDATE POST
 const updatePost = async (req, res) => {
+    console.log("update post request body: ", req.body);
+    console.log("update post request params: ", req.params);
+
     try {
         const post = await Post.findById(req.params.id);
         if (post.userId === req.body.userId) {
@@ -160,15 +163,7 @@ const getUserPostsByUserId = async (req, res) => {
     }
 };
 
-// REPORT POST
-const reportPost = async (req, res) => {
-    try {
-        res.status(200);
-    } catch (error) {
-        console.log("error in report post", error.message)
-    }
-}
-
+// SAVE/UNSAVE POST
 const savePost = async (req, res) => {
     const postId = req.params.id;
     const userId = req.body.userId

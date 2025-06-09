@@ -17,15 +17,22 @@ export default function Post({ post, user, triggerRefresh }) {
     // STATE VARIABLES
     const [like, setLike] = useState(post.likes.length); // Number of likes
     const [isLiked, setIsLiked] = useState(false); // Whether the current user liked the post
+
     const [isSaved, setIsSaved] = useState(false); // Whether the current user saved the post
+
     const [commentsOpen, setCommentsOpen] = useState(false); // Toggle comments visibility
     const [menuOpen, setMenuOpen] = useState(false); // Toggle post options menu
     const [showDeleteModal, setShowDeleteModal] = useState(false); // Toggle delete confirmation modal
+
     const [comments, setComments] = useState([]); // Store fetched comments
     const [newCommentText, setNewCommentText] = useState(''); // Input text for new comment
     const [openCommentMenuId, setOpenCommentMenuId] = useState(null); // Track which comment's menu is open
-
+    const [editCommentText, setEditCommentText] = useState(''); // Text for editing comment
+    const [editCommentId, setEditCommentId] = useState(null); // ID of the comment being edited
     const [commentToDelete, setCommentToDelete] = useState(null); // ID of comment to delete
+
+    const [editingPost, setEditingPost] = useState(false); // Toggle post editing mode
+    const [editPostDesc, setEditPostDesc] = useState(post.desc || ''); // Text for editing post description     
 
     // REFS to detect clicks outside of menus
     const menuRef = useRef(null);
@@ -97,7 +104,6 @@ export default function Post({ post, user, triggerRefresh }) {
             const res = await axios.get(`${backend_url}/comments/${post._id}`);
             // console.log("fetched comments****************************:", res.data);
 
-
             if (res.data.message === "No comments found for this post.") {
                 setComments([]); // No comments found, set empty array
                 return;
@@ -122,6 +128,42 @@ export default function Post({ post, user, triggerRefresh }) {
         }
     };
 
+    const handleEditComment = async (commentId) => {
+        try {
+            const res = await axios.put(`${backend_url}/comments/${commentId}`, {
+                userId: currentUser._id,
+                text: editCommentText,
+            });
+
+            // Update comment in UI
+            setComments(comments.map(comment =>
+                comment._id === commentId ? { ...comment, text: editCommentText } : comment
+            ));
+
+            // Reset states
+            setEditCommentText('');
+            setOpenCommentMenuId(null);
+            setEditCommentId(null);
+
+            // ✅ Show success toast only
+            // toast.success("Comment updated successfully!", {
+            //     autoClose: 1000,
+            //     closeOnClick: true,
+            // });
+
+            await fetchComments();
+
+        } catch (error) {
+            console.error("Error editing comment:", error);
+
+            // ❌ Show error toast only
+            // toast.error("Failed to update comment!", {
+            //     autoClose: 3000,
+            //     closeOnClick: true,
+            // });
+        }
+    };
+
     // Delete a post by ID
     const deletePost = async () => {
         try {
@@ -137,6 +179,26 @@ export default function Post({ post, user, triggerRefresh }) {
             console.error(err);
             toast.error("You can delete only your post.");
             setMenuOpen(false);
+        }
+    };
+
+    // edit post
+    const handleEditPost = async () => {
+        try {
+            const res = await axios.put(`${backend_url}/posts/${post._id}`, {
+                userId: currentUser._id,
+                desc: editPostDesc,
+            });
+            alert("Post updated successfully!");
+            console.log("Edit post response from backend:", res.data);
+            post.desc = editPostDesc; // Update post description in the state
+
+            setEditingPost(false); // Exit edit mode
+            setMenuOpen(false); // Close menu
+            triggerRefresh(true); // Refresh post list
+        } catch (error) {
+            console.error("Error editing post:", error);
+            alert("Failed to update post. You can edit only your post.");
         }
     };
 
@@ -202,6 +264,10 @@ export default function Post({ post, user, triggerRefresh }) {
                         {menuOpen && (
                             <div className="postMenu" ref={menuRef}>
                                 <div className="postMenuItem" onClick={() => setShowDeleteModal(true)}>Delete</div>
+                                <div className='postMenuItem' onClick={() => {
+                                    setEditingPost(true);
+                                    setEditPostDesc(post.desc);
+                                }}>Edit</div>
                                 <div className="postMenuItem">Report</div>
                             </div>
                         )}
@@ -210,27 +276,51 @@ export default function Post({ post, user, triggerRefresh }) {
 
                 {/* Post Content */}
                 <div className="postCenter">
-                    <span className="postText">
-                        {post?.desc?.length > DESCRIPTION_LIMIT ? (
-                            <>
-                                {readMore ? post.desc : `${post.desc.substring(0, DESCRIPTION_LIMIT)}... `}
-                                <span onClick={() => setReadMore(!readMore)} className="readMoreToggle">
-                                    {readMore ? 'Show less' : 'Read more'}
-                                </span>
-                            </>
-                        ) : (
-                            post?.desc
-                        )}
-                    </span>
+                    {editingPost ? (
+                        <div className="editPostBox">
+                            <textarea
+                                value={editPostDesc}
+                                onChange={(e) => setEditPostDesc(e.target.value)}
+                                className="editPostInput"
+                            />
+                            <div className="editActions">
+                                <button className="commentBtn" onClick={handleEditPost}>Save</button>
+                                <button
+                                    className="commentBtn cancel"
+                                    onClick={() => {
+                                        setEditingPost(false); // Exit edit mode
+                                        setEditPostDesc(post.desc || ''); // Reset to original post description
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <span className="postText">
+                                {post?.desc?.length > DESCRIPTION_LIMIT ? (
+                                    <>
+                                        {readMore ? post.desc : `${post.desc.substring(0, DESCRIPTION_LIMIT)}... `}
+                                        <span onClick={() => setReadMore(!readMore)} className="readMoreToggle">
+                                            {readMore ? 'Show less' : 'Read more'}
+                                        </span>
+                                    </>
+                                ) : (
+                                    post?.desc
+                                )}
+                            </span>
 
-                    {post?.img && <img className="postImg" src={PF + post.img} alt="post" />}
+                            {post?.img && <img className="postImg" src={PF + post.img} alt="post" />}
 
-                    {/* Tags */}
-                    <div className="postTags">
-                        {post?.tags?.map((tag, index) => (
-                            <span key={index} className="tag">#{tag}</span>
-                        ))}
-                    </div>
+                            {/* Tags */}
+                            <div className="postTags">
+                                {post?.tags?.map((tag, index) => (
+                                    <span key={index} className="tag">#{tag}</span>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 {/* Like & Comment Buttons */}
@@ -265,7 +355,6 @@ export default function Post({ post, user, triggerRefresh }) {
                 {/* Comments Section */}
                 {commentsOpen && (
                     <div className="commentsSectionWrapper">
-                        
                         {/* Add new comment box */}
                         <div className="newCommentBox">
                             <textarea
@@ -300,14 +389,52 @@ export default function Post({ post, user, triggerRefresh }) {
                                                         }}>
                                                         Delete
                                                     </div>
-                                                    <div className="postMenuItem">Edit</div>
+                                                    <div
+                                                        className="postMenuItem"
+                                                        onClick={() => {
+                                                            setEditCommentId(comment._id); // enter edit mode
+                                                            setEditCommentText(comment.text); // prefill current comment text
+                                                            setOpenCommentMenuId(null); // close the menu
+                                                        }}
+                                                    >
+                                                        Edit
+                                                    </div>
                                                     <div className="postMenuItem">Report</div>
                                                 </div>
                                             )}
                                         </div>
                                         <div>
-                                            <span className="commentUsername">{comment.username}</span>
-                                            <span className="commentText">{comment.text}</span>
+                                            {editCommentId === comment._id ? (
+                                                <div className="editCommentBox">
+                                                    <textarea
+                                                        value={editCommentText}
+                                                        onChange={(e) => setEditCommentText(e.target.value)}
+                                                        className="commentInput"
+                                                    />
+                                                    <div className="editActions">
+                                                        <button
+                                                            className="commentBtn"
+                                                            onClick={() => handleEditComment(comment._id)}
+                                                        >
+                                                            Save
+                                                        </button>
+                                                        <button
+                                                            className="commentBtn cancel"
+                                                            onClick={() => {
+                                                                setEditCommentId(null);
+                                                                setEditCommentText('');
+                                                            }}
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <span className="commentUsername">{comment.username}</span>
+                                                    <span className="commentText">{comment.text}</span>
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="commentTime">
                                             {new Date(comment.createdAt).toLocaleTimeString()}
@@ -316,7 +443,6 @@ export default function Post({ post, user, triggerRefresh }) {
                                 </div>
                             ))}
                         </div>
-
                     </div>
                 )}
 
@@ -342,4 +468,4 @@ export default function Post({ post, user, triggerRefresh }) {
         </div>
     );
 }
-// Note: The above code is a complete React component for displaying a post with features like liking, commenting, saving, and deleting posts/comments. It includes state management, API calls, and UI interactions. The component is designed to be reusable and modular, making it easy to integrate into a larger application.
+    // Note: The above code is a complete React component for displaying a post with features like liking, commenting, saving, and deleting posts/comments. It includes state management, API calls, and UI interactions. The component is designed to be reusable and modular, making it easy to integrate into a larger application.

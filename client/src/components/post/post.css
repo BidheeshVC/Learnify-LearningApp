@@ -279,3 +279,20 @@
   font-size: 12px;
   margin-right: 5px;
 }
+
+.editCommentBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.editActions {
+  display: flex;
+  gap: 8px;
+}
+
+.commentBtn.cancel {
+  background-color: transparent;
+  color: #888;
+  border: 1px solid #ccc;
+}

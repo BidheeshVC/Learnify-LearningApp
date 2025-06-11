@@ -12,7 +12,8 @@ const INITIAL_STATE = {
         profilePicture: "https://imageio.forbes.com/specials-images/imageserve/68228d64025e4de51504ace2/0x0.jpg?format=jpg&crop=1141,1141,x85,y16,safe&height=416&width=416&fit=bounds",
         coverPicture: "https://static.vecteezy.com/system/resources/previews/045/507/231/non_2x/a-boy-looking-in-the-cosmic-sky-for-facebook-cover-editor_template.jpeg?last_updated=1716277969",
         isAdmin: false,
-        desc: "",
+        desc: "In three words I can sum up everything I've learned about life: It goes on."
+,
         bio: "",
         createdAt: "",
         updatedAt: "",

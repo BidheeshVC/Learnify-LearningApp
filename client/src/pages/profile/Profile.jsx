@@ -15,7 +15,7 @@ export default function Profile() {
 
     const { currentUser } = useContext(AuthContext)
 
-    // console.log("user in profile page :::", currentUser)
+    console.log("user in profile page from context :::", currentUser)
 
     const location = useLocation();
     const { post } = location.state || {};
@@ -24,6 +24,8 @@ export default function Profile() {
     const [userPosts, setUserPosts] = useState([]);
     const [userDetails, setUserDetails] = useState(null);
     const [followed, setFollowed] = useState(false);
+
+    const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
 
     let backend_url = process.env.BACKEND_URL || "http://localhost:4000/api";
@@ -34,6 +36,7 @@ export default function Profile() {
         try {
             const userIdForPosts = post?.userId || null;
             const res = await axios.get(`${backend_url}/users/${userIdForPosts}`);
+            console.log("Fetched user details++++++++++++++++++++:", res.data);
             setUserDetails(res.data);
 
             const isFollowing = res.data.followers?.some(
@@ -129,6 +132,7 @@ export default function Profile() {
                                 /> */
                                 <img className="profileCoverImg" src={coverImage} alt="Cover" />
                             }
+
                             <img
                                 className="profileUserImg"
                                 // src={post?.profilePicture || PF + "person/noAvatar.png"}
@@ -143,17 +147,98 @@ export default function Profile() {
                         <div className="profileInfo">
                             <h4 className="profileInfoName">{post ? post?.username : currentUser?.username}</h4>
                             <span className="profileInfoDesc">Hello my friends!</span>
+                            {/* 
+                            {userDetails && currentUser._id == userDetails._id && (
+                                <div className="profileMenu">
+                                    <button className='editprofilebutton'>Edit Profile</button>
+                                </div>
+                            )} */}
+                            {/* <div className="profileMenu">
+                                <button className='editprofilebutton'>Edit Profile</button>
+                            </div> */}
+
 
                             {/* Show follow button if it's not your own profile */}
-                            {userDetails && currentUser._id !== userDetails._id && (
+                            {/* {userDetails && currentUser._id !== userDetails._id && (
 
                                 // {userDetails.followers.includes(currentUser._id) && 
-
-
                                 <button className="followButton" onClick={followHandler}>
                                     {followed ? "Unfollow" : "Follow"}
                                 </button>
+                            )} */}
+
+                            {userDetails && currentUser._id !== userDetails._id ? (
+                                <button className="followButton" onClick={followHandler}>
+                                    {followed ? "Unfollow" : "Follow"}
+                                </button>
+                            ) : (
+                                <div className="profileMenu">
+                                    <button
+                                        className="editprofilebutton"
+                                        onClick={() => setShowEditProfileModal(true)}
+                                    >
+                                        Edit Profile
+                                    </button>
+                                </div>
                             )}
+
+                            {showEditProfileModal && (
+                                <div className="modal-overlay" onClick={() => setShowEditProfileModal(false)}>
+                                    <div
+                                        className="editProfileModal"
+                                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+                                    >
+                                        <h2>Edit Profile</h2>
+                                        <form className="edit-profile-form">
+                                            <div className="form-group">
+                                                <label htmlFor="username">Username</label>
+                                                <input
+                                                    type="text"
+                                                    id="username"
+                                                    name="username" 
+                                                    placeholder={post ? post?.username : currentUser?.username}
+                                                    required
+                                                />
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label htmlFor="description">Description</label>
+                                                <textarea
+                                                    id="description"
+                                                    name="description"
+                                                    placeholder={post ? post?.description : currentUser?.description}
+                                                    rows="3"
+                                                />
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label htmlFor="profilePicture">Profile Picture</label>
+                                                <input type="file" id="profilePicture" accept="image/*" />
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label htmlFor="coverPicture">Cover Picture</label>
+                                                <input type="file" id="coverPicture" accept="image/*" />
+                                            </div>
+
+                                            <div className="form-actions">
+                                                <button
+                                                    type="button"
+                                                    className="cancel-btn"
+                                                    onClick={() => setShowEditProfileModal(false)}
+                                                >
+                                                    Cancel
+                                                </button>
+                                                <button type="submit" className="save-btn">
+                                                    Save Changes
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            )}
+
+
                         </div>
 
                     </div>

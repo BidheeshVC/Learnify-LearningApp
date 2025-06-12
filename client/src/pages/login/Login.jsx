@@ -20,9 +20,25 @@ export default function Login() {
 
 
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    loginCall({ email: email.current.value, password: password.current.value }, dispatch);
+    // loginCall({ email: email.current.value, password: password.current.value }, dispatch);
+
+    try {
+      const response = await loginCall({ email: email.current.value, password: password.current.value }, dispatch);
+      
+      if (response.status === 200) {
+        alert(response.data.message);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        // setAuthUser(response.data.user); // Update auth state
+        console.log("User data saved to local storage after logged in   :", response.data.user);
+        navigate('/');
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert(error.response?.data?.message || "An error occurred during login");
+    }
+
 
     console.log('Login attempt:', { email: email.current.value, password: password.current.value });
 
@@ -44,13 +60,13 @@ export default function Login() {
 
 
   };
-  useEffect(() => {
-    if (currentUser) {
-      console.log("User logged in on use:", currentUser);
-      // You can navigate here if needed
-      navigate("/");
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     console.log("User logged in on use:", currentUser);
+  //     // You can navigate here if needed
+  //     navigate("/");
+  //   }
+  // }, [currentUser]);
 
 
   return (

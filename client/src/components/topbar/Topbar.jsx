@@ -12,51 +12,51 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate hook for n
 
 export default function Topbar() {
 
-  const { dispatch } = useContext(AuthContext);
+    const { dispatch } = useContext(AuthContext);
 
-  const { currentUser } = useContext(AuthContext)
+    const { currentUser } = useContext(AuthContext)
 
-  const navigate = useNavigate(); // useNavigate hook to programmatically navigate
-  // console.log("currentUser in topbar component: ", currentUser);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    const navigate = useNavigate(); // useNavigate hook to programmatically navigate
+    console.log("currentUser in topbar component: ", currentUser);
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
- 
-  // const [user, setUser] = useState(null); // to store user data from local storage
 
-  // get user data from local storage
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   console.log("User data from local storage:------------------------------", user);
+    // const [user, setUser] = useState(null); // to store user data from local storage
 
-  //   if (user) {
+    // get user data from local storage
+    // useEffect(() => {
+    //   const user = JSON.parse(localStorage.getItem("user"));
+    //   console.log("User data from local storage:------------------------------", user);
 
-  //     user.userId = user._id; // Assuming you want to set userId to _id
-  //     setUser(user);
-  //   } else {
-  //     console.log("User not found in local storage");
-  //   }
-  // }, []);
+    //   if (user) {
 
-  // console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr1:", user);
+    //     user.userId = user._id; // Assuming you want to set userId to _id
+    //     setUser(user);
+    //   } else {
+    //     console.log("User not found in local storage");
+    //   }
+    // }, []);
 
-  return (
-    <div className="topbarContainer">
-      <div className="topbarLeft">
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">Learnify</span>
-        </Link>
-      </div>
-      <div className="topbarCenter">
-        <div className="searchbar">
-          <SearchIcon className="searchIcon" />
-          <input
-            placeholder="Search for friend, post or video"
-            className="searchInput"
-          />
-        </div>
-      </div>
-      <div className="topbarRight">
-        {/* <div className="topbarLinks">
+    // console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr1:", user);
+
+    return (
+        <div className="topbarContainer">
+            <div className="topbarLeft">
+                <Link to="/" style={{ textDecoration: "none" }}>
+                    <span className="logo">Learnify</span>
+                </Link>
+            </div>
+            <div className="topbarCenter">
+                <div className="searchbar">
+                    <SearchIcon className="searchIcon" />
+                    <input
+                        placeholder="Search for friend, post or video"
+                        className="searchInput"
+                    />
+                </div>
+            </div>
+            <div className="topbarRight">
+                {/* <div className="topbarLinks">
           <span className="topbarLink">Homepage</span>
           <span className="topbarLink">Timeline</span>
           <Link
@@ -72,35 +72,38 @@ export default function Topbar() {
             <span className="topbarLink">Register</span>
           </Link>
         </div> */}
-        <div className="topbarIcons">
-          <div className="topbarIconItem">
-            <PersonIcon />
-            <span className="topbarIconBadge">1</span>
-          </div>
-          <div className="topbarIconItem">
-            <ChatIcon />
-            <span className="topbarIconBadge">2</span>
-          </div>
-          <div className="topbarIconItem">
-            <NotificationsIcon />
-            <span className="topbarIconBadge">1</span>
-          </div>
-          <div className="topbarIconItem">
-           
-          </div>
+                <div className="topbarIcons">
+                    <div className="topbarIconItem">
+                        <PersonIcon />
+                        <span className="topbarIconBadge">1</span>
+                    </div>
+                    <div className="topbarIconItem">
+                        <ChatIcon />
+                        <span className="topbarIconBadge">2</span>
+                    </div>
+                    <div className="topbarIconItem">
+                        <NotificationsIcon />
+                        <span className="topbarIconBadge">1</span>
+                    </div>
+                    <div className="topbarIconItem">
 
+                    </div>
+
+                </div>
+                {/* <Link to={`/profile/`}> */}
+                <Link to="/profile" state={{ post: currentUser.user }}>
+                    <img
+                        src={currentUser?.user?.profilePicture
+                            ? currentUser?.user?.profilePicture
+                            : PF + "/persons/person2.jpeg"}
+                        alt=""
+                        className="topbarImg"
+                    />
+                </Link>
+
+            </div>
         </div>
-        <Link to={`/profile/`}>
-          <img
-            src={currentUser?.profilePicture ? currentUser.profilePicture : PF + "/persons/person2.jpeg"}
-            alt=""
-            className="topbarImg"
-          />
-        </Link>
-
-      </div>
-    </div>
-  );
+    );
 }
 
 
@@ -196,4 +199,3 @@ export default function Topbar() {
 //     </div>
 //   );
 // }
-

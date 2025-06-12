@@ -3,13 +3,14 @@ import './profile.css'
 import Topbar from '../../components/topbar/Topbar'
 import Sidebar from "../../components/sidebar/Sidebar";
 import Rightbar from "../../components/rightbar/Rightbar";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Post from '../../components/post/Post';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
+
 
 export default function Profile() {
 
@@ -26,6 +27,8 @@ export default function Profile() {
     const [followed, setFollowed] = useState(false);
 
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+
+    const navigate = useNavigate();
 
 
     let backend_url = process.env.BACKEND_URL || "http://localhost:4000/api";
@@ -89,7 +92,14 @@ export default function Profile() {
             console.log("Followed status before error:", followed);
         }
     };
-
+// logout handler
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        window.location.reload(); // Reload the page to reflect the logout
+        console.log("User logged out successfully.");
+        console.log("Current user after logout----------------:", currentUser);
+        navigate("/login"); // Redirect to login page
+    };
 
 
 
@@ -173,12 +183,19 @@ export default function Profile() {
                                 </button>
                             ) : (
                                 <div className="profileMenu">
-                                    <button
+                                  <div>
+                                      <button
                                         className="editprofilebutton"
                                         onClick={() => setShowEditProfileModal(true)}
                                     >
                                         Edit Profile
                                     </button>
+                                  </div>
+                                    <div>
+                                        <button className="logoutbutton"
+                                        onClick={handleLogout}
+                                        >Log Out</button>
+                                    </div>
                                 </div>
                             )}
 

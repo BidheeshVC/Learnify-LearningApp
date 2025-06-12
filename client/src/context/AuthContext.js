@@ -1,25 +1,25 @@
 import { createContext, useReducer } from "react";
 import AuthReducer from "./AuthReducer";
 
-const INITIAL_STATE = {
+// const INITIAL_STATE = {
 
-    user: {
-        _id: "67dd701108eea9912339c867",
-        username: "Kishan",
-        email: "kishan@gmail.com",
-        followers: [],
-        followings: [],
-        profilePicture: "https://imageio.forbes.com/specials-images/imageserve/68228d64025e4de51504ace2/0x0.jpg?format=jpg&crop=1141,1141,x85,y16,safe&height=416&width=416&fit=bounds",
-        coverPicture: "https://static.vecteezy.com/system/resources/previews/045/507/231/non_2x/a-boy-looking-in-the-cosmic-sky-for-facebook-cover-editor_template.jpeg?last_updated=1716277969",
-        isAdmin: false,
-        desc: "In three words I can sum up everything I've learned about life: It goes on."
-,
-        bio: "",
-        createdAt: "",
-        updatedAt: "",
-    },
-    isFetching: false,
-    error: false,
+    //     user: {
+    //         _id: "67dd701108eea9912339c867",
+    //         username: "Kishan",
+    //         email: "kishan@gmail.com",
+    //         followers: [],
+    //         followings: [],
+    //         profilePicture: "https://imageio.forbes.com/specials-images/imageserve/68228d64025e4de51504ace2/0x0.jpg?format=jpg&crop=1141,1141,x85,y16,safe&height=416&width=416&fit=bounds",
+    //         coverPicture: "https://static.vecteezy.com/system/resources/previews/045/507/231/non_2x/a-boy-looking-in-the-cosmic-sky-for-facebook-cover-editor_template.jpeg?last_updated=1716277969",
+    //         isAdmin: false,
+    //         desc: "In three words I can sum up everything I've learned about life: It goes on."
+    // ,
+    //         bio: "",
+    //         createdAt: "",
+    //         updatedAt: "",
+    //     },
+    //     isFetching: false,
+    //     error: false,
 
     // user: { 
     //     _id: "67dd6fcb08eea9912339c863",
@@ -55,7 +55,14 @@ const INITIAL_STATE = {
     // },
     // isFetching: false,
     // error: false,
+// };
+
+const INITIAL_STATE = {
+    user: JSON.parse(localStorage.getItem("user")) || null,
+    isFetching: false,
+    error: false,
 };
+console.log("Initial user state from local storage:", INITIAL_STATE.user);
 
 export const AuthContext = createContext(INITIAL_STATE);
 

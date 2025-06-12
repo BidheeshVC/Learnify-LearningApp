@@ -5,11 +5,17 @@ import { format } from 'timeago.js';
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Rightbar({ profile }) {
   const [userDetails, setUserDetails] = useState([]);
+  const navigate = useNavigate(); // Hook for navigation
 
   const { currentUser } = useContext(AuthContext);
+  if (!currentUser) {
+    console.error("Current user is not available in Rightbar component.");
+    navigate('/login'); // Redirect to login if currentUser is not available
+  }
 
   // console.log("user in rightbar:", currentUser);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -25,7 +31,7 @@ export default function Rightbar({ profile }) {
 
           // filter out the current user and sort by last online time
           const filteredUsers= res.data.filter(
-            (u) => u._id!== currentUser._id
+            (u) => u._id!== currentUser?._id
           )
           setUserDetails(filteredUsers);
        

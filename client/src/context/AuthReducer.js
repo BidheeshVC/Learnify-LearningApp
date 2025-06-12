@@ -7,6 +7,8 @@ const AuthReducer = (state, action) => {
                 error: false,
             };
         case "LOGIN_SUCCESS":
+            localStorage.setItem("user", JSON.stringify(action.payload));
+            console.log("User data saved to local storage:", action.payload);
             return {
                 user: action.payload,
                 isFetching: false,

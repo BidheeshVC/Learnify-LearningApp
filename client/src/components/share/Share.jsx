@@ -223,9 +223,10 @@ export default function Share({ triggerRefresh }) {
         <div className="share">
             <div className="shareWrapper">
                 <div className="shareTop">
-                    <img className="shareProfileImg" src={currentUser?.profilePicture || "/assets/person/noAvatar.png"} alt="" />
+                    <img className="shareProfileImg" src={currentUser?.user?.profilePicture
+ || "/assets/person/noAvatar.png"} alt="" />
                     <div className="shareUserInfo">
-                        <span className="shareUsername">{currentUser?.username}</span>
+                        <span className="shareUsername">{currentUser?.user?.username}</span>
                         {locationName && <span className="shareLocation">Location: {locationName}</span>}
                     </div>
                 </div>

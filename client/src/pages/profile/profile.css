@@ -68,12 +68,12 @@
 .profileMenu {
     flex: 3;
     padding: 10px;
-    background-color: #1877f2;
     color: white;
     border-radius: 10px;
-    width: 150px;
+    width: 226px;
     text-align: center;
     margin-top: 10px;
+    display: flex;
 }
 
 .editprofilebutton {
@@ -83,6 +83,21 @@
     font-weight: 600;
     cursor: pointer;
     transition: 0.3s ease;
+    background-color: #1877f2;
+    padding: 6px 12px;
+}
+
+.logoutbutton {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+    background-color: #1877f2;
+    padding: 6px 12px;
+    margin-left: 10px;
+
 }
 
 /* ++++++++++++++++++++++++++++++++++ */
@@ -424,7 +439,7 @@
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     animation: slideDown 0.3s ease;
-   
+
 }
 
 /* Slide-down animation */

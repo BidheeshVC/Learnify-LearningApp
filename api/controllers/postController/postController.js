@@ -167,10 +167,13 @@ const getUserPostsByUserId = async (req, res) => {
 const savePost = async (req, res) => {
     const postId = req.params.id;
     const userId = req.body.userId
+    console.log("postId in save post", postId)
+    console.log("userId in save post", userId)
     try {
         if (!postId || !userId) res.status(500).json("post id and userid required");
 
         const post = await Post.findById(postId)
+        console.log("post in save post", post)
         if (!post) {
             return res.status(404).json({ message: "POST NOT FOUND" })
         }
@@ -178,6 +181,7 @@ const savePost = async (req, res) => {
             await post.updateOne({ $push: { savedBy: userId } });
             res.status(200).json("The post has been saved");
         } else {
+            console.log("post saved by user else condition::    ", post.savedBy)
             await post.updateOne({ $pull: { savedBy: userId } });
             res.status(200).json("The post has been unsaved");
         }

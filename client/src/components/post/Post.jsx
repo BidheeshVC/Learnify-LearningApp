@@ -14,6 +14,8 @@ export default function Post({ post, user, triggerRefresh }) {
     // console.log("Post component rendered with post:", post);
     const { currentUser } = useContext(AuthContext); // Logged-in user's info
 
+    console.log("user id got in post component:----------------", currentUser.user._id);
+
     // STATE VARIABLES
     const [like, setLike] = useState(post.likes.length); // Number of likes
     const [isLiked, setIsLiked] = useState(false); // Whether the current user liked the post
@@ -67,10 +69,12 @@ export default function Post({ post, user, triggerRefresh }) {
 
     // Handle save post button click
     const handleSave = async () => {
+        console.log(`${backend_url}/posts/${post._id}/save`)
         try {
-            await axios.put(`${backend_url}/posts/${post._id}/save`, {
-                userId: currentUser._id,
+           const saveResult = await axios.put(`${backend_url}/posts/${post._id}/save`, {
+                userId: currentUser.user._id,
             });
+console.log("saveResult: ", saveResult.data);
             setIsSaved(!isSaved); // Toggle saved state
         } catch (error) {
             console.error('Error saving post:', error);
@@ -81,10 +85,8 @@ export default function Post({ post, user, triggerRefresh }) {
     const handleSubmitComment = async () => {
         if (!newCommentText.trim()) return; // Do not submit empty comments
         try {
-            const res = await axios.post(`${backend_url}/comments/${post._id}`, {
-                userId: currentUser._id,
-                text: newCommentText,
-            });
+            const res = await axios.post(`${backend_url}/comments/${post._id}`, { userId: currentUser._id, text: newCommentText, });
+            console.log("Comment submitted:", res.data);
             setComments([...comments, res.data]); // Add new comment to state
             setNewCommentText(''); // Clear input
             fetchComments(); // Refresh comments from server
@@ -102,7 +104,7 @@ export default function Post({ post, user, triggerRefresh }) {
     const fetchComments = async () => {
         try {
             const res = await axios.get(`${backend_url}/comments/${post._id}`);
-            // console.log("fetched comments****************************:", res.data);
+            // console.log("fetched comments**:", res.data);
 
             if (res.data.message === "No comments found for this post.") {
                 setComments([]); // No comments found, set empty array
@@ -118,9 +120,7 @@ export default function Post({ post, user, triggerRefresh }) {
     // Delete a comment by ID
     const handleDeleteComment = async (commentId) => {
         try {
-            const res = await axios.delete(`${backend_url}/comments/${commentId}`, {
-                data: { userId: currentUser._id },
-            });
+            const res = await axios.delete(`${backend_url}/comments/${commentId}`, { data: { userId: currentUser._id }, });
             setComments(comments.filter(comment => comment._id !== commentId)); // Remove from UI
         } catch (error) {
             console.error("Error deleting comment:", error);
@@ -130,10 +130,7 @@ export default function Post({ post, user, triggerRefresh }) {
 
     const handleEditComment = async (commentId) => {
         try {
-            const res = await axios.put(`${backend_url}/comments/${commentId}`, {
-                userId: currentUser._id,
-                text: editCommentText,
-            });
+            const res = await axios.put(`${backend_url}/comments/${commentId}`, { userId: currentUser._id, text: editCommentText, });
 
             // Update comment in UI
             setComments(comments.map(comment =>
@@ -167,9 +164,7 @@ export default function Post({ post, user, triggerRefresh }) {
     // Delete a post by ID
     const deletePost = async () => {
         try {
-            const res = await axios.delete(`${backend_url}/posts/${post._id}`, {
-                data: { userId: currentUser._id },
-            });
+            const res = await axios.delete(`${backend_url}/posts/${post._id}`, { data: { userId: currentUser._id }, });
             toast.success(res.data); // Show success message
             setTimeout(() => {
                 triggerRefresh(true); // Refresh post list
@@ -185,10 +180,7 @@ export default function Post({ post, user, triggerRefresh }) {
     // edit post
     const handleEditPost = async () => {
         try {
-            const res = await axios.put(`${backend_url}/posts/${post._id}`, {
-                userId: currentUser._id,
-                desc: editPostDesc,
-            });
+            const res = await axios.put(`${backend_url}/posts/${post._id}`, { userId: currentUser._id, desc: editPostDesc, });
             alert("Post updated successfully!");
             console.log("Edit post response from backend:", res.data);
             post.desc = editPostDesc; // Update post description in the state
@@ -341,13 +333,15 @@ export default function Post({ post, user, triggerRefresh }) {
                                 onClick={() => {
                                     setCommentsOpen(!commentsOpen);
                                     if (!commentsOpen) {
-                                        fetchComments(); // Only fetch when opening
+                                        fetchComments();
                                     }
                                 }}
                             >
-                                {commentsOpen ? `Hide  ${comments.length || 0} comments` : `View  ${comments.length || 0} comments`}
-                                {/* View comments */}
+                                {commentsOpen
+                                    ? `Hide ${comments.length || 0} comments`
+                                    : `View ${comments.length || 0} comments`}
                             </span>
+
                         </div>
                     </div>
                 </div>
@@ -468,4 +462,4 @@ export default function Post({ post, user, triggerRefresh }) {
         </div>
     );
 }
-    // Note: The above code is a complete React component for displaying a post with features like liking, commenting, saving, and deleting posts/comments. It includes state management, API calls, and UI interactions. The component is designed to be reusable and modular, making it easy to integrate into a larger application.
+// Note: The above code is a complete React component for displaying a post with features like liking, commenting, saving, and deleting posts/comments. It includes state management, API calls, and UI interactions. The component is designed to be reusable and modular, making it easy to integrate into a larger application.

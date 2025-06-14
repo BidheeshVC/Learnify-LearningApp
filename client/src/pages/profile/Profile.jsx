@@ -69,7 +69,7 @@ export default function Profile() {
 
     useEffect(() => {
         // When coming from a post, use post.userId instead of post._id
-        let userIdForPosts = post?.userId || currentUser?._id || null;
+        let userIdForPosts = post?.userId || currentUser?.user._id || null;
         console.log("User ID for posts:", userIdForPosts);
         fetchUserPosts(userIdForPosts);
         fetchUserDetails(userIdForPosts);

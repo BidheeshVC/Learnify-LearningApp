@@ -37,13 +37,14 @@ export default function Profile() {
 
     const fetchUserDetails = async () => {
         try {
-            const userIdForPosts = post?.userId || null;
+            const userIdForPosts = post?.userId || currentUser?.user?._id || null;
+            console.log("Fetching user details for userId:", userIdForPosts);
             const res = await axios.get(`${backend_url}/users/${userIdForPosts}`);
             console.log("Fetched user details++++++++++++++++++++:", res.data);
             setUserDetails(res.data);
 
             const isFollowing = res.data.followers?.some(
-                (followerId) => followerId._id.toString() === currentUser._id
+                (followerId) => followerId._id.toString() === currentUser.user._id
             );
 
             console.log("is following:", isFollowing);
@@ -58,7 +59,7 @@ export default function Profile() {
     const fetchUserPosts = async (userIdForPosts) => {
         try {
             const res = await axios.get(`${backend_url}/posts/profile/${userIdForPosts}`);
-            // console.log("Fetched user posts:", res.data);
+            console.log("Fetched user posts:", res.data);
             setUserPosts(res.data);
         } catch (err) {
             console.error("Error fetching user posts:", err);
@@ -69,20 +70,21 @@ export default function Profile() {
     useEffect(() => {
         // When coming from a post, use post.userId instead of post._id
         let userIdForPosts = post?.userId || currentUser?._id || null;
+        console.log("User ID for posts:", userIdForPosts);
         fetchUserPosts(userIdForPosts);
         fetchUserDetails(userIdForPosts);
 
     }, [currentUser, post, userDetails?._id]);
 
     const followHandler = async () => {
-        if (currentUser._id === userDetails._id) {
+        if (currentUser.user._id === userDetails._id) {
             toast.warn("You can't follow yourself.");
             console.warn("You can't follow yourself.");
             return; // Prevent sending request
         }
         try {
             await axios.put(`${backend_url}/users/${userDetails._id}/followandunfollow`, {
-                userId: currentUser._id,
+                userId: currentUser.user._id,
             });
             await fetchUserDetails();
         }
@@ -92,7 +94,7 @@ export default function Profile() {
             console.log("Followed status before error:", followed);
         }
     };
-// logout handler
+    // logout handler
     const handleLogout = () => {
         localStorage.removeItem("user");
         window.location.reload(); // Reload the page to reflect the logout
@@ -158,7 +160,7 @@ export default function Profile() {
                             <h4 className="profileInfoName">{post ? post?.username : currentUser?.username}</h4>
                             <span className="profileInfoDesc">Hello my friends!</span>
                             {/* 
-                            {userDetails && currentUser._id == userDetails._id && (
+                            {userDetails && currentUser.user._id == userDetails._id && (
                                 <div className="profileMenu">
                                     <button className='editprofilebutton'>Edit Profile</button>
                                 </div>
@@ -169,31 +171,31 @@ export default function Profile() {
 
 
                             {/* Show follow button if it's not your own profile */}
-                            {/* {userDetails && currentUser._id !== userDetails._id && (
+                            {/* {userDetails && currentUser.user._id !== userDetails._id && (
 
-                                // {userDetails.followers.includes(currentUser._id) && 
+                                // {userDetails.followers.includes(currentUser.user._id) && 
                                 <button className="followButton" onClick={followHandler}>
                                     {followed ? "Unfollow" : "Follow"}
                                 </button>
                             )} */}
 
-                            {userDetails && currentUser._id !== userDetails._id ? (
+                            {userDetails && currentUser.user._id !== userDetails._id ? (
                                 <button className="followButton" onClick={followHandler}>
                                     {followed ? "Unfollow" : "Follow"}
                                 </button>
                             ) : (
                                 <div className="profileMenu">
-                                  <div>
-                                      <button
-                                        className="editprofilebutton"
-                                        onClick={() => setShowEditProfileModal(true)}
-                                    >
-                                        Edit Profile
-                                    </button>
-                                  </div>
+                                    <div>
+                                        <button
+                                            className="editprofilebutton"
+                                            onClick={() => setShowEditProfileModal(true)}
+                                        >
+                                            Edit Profile
+                                        </button>
+                                    </div>
                                     <div>
                                         <button className="logoutbutton"
-                                        onClick={handleLogout}
+                                            onClick={handleLogout}
                                         >Log Out</button>
                                     </div>
                                 </div>
@@ -212,7 +214,7 @@ export default function Profile() {
                                                 <input
                                                     type="text"
                                                     id="username"
-                                                    name="username" 
+                                                    name="username"
                                                     placeholder={post ? post?.username : currentUser?.username}
                                                     required
                                                 />

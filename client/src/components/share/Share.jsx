@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Share({ triggerRefresh }) {
     const { currentUser } = useContext(AuthContext);
+    console.log("currentUser in share component: ", currentUser);
     const desc = useRef("");
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -172,7 +173,7 @@ export default function Share({ triggerRefresh }) {
         if (!validateForm()) return;
 
         const newPost = {
-            userId: currentUser._id,
+            userId: currentUser.user._id,
             desc: desc.current.value,
             location: location,
             locationName: locationName,
@@ -224,7 +225,7 @@ export default function Share({ triggerRefresh }) {
             <div className="shareWrapper">
                 <div className="shareTop">
                     <img className="shareProfileImg" src={currentUser?.user?.profilePicture
- || "/assets/person/noAvatar.png"} alt="" />
+                        || "/assets/person/noAvatar.png"} alt="" />
                     <div className="shareUserInfo">
                         <span className="shareUsername">{currentUser?.user?.username}</span>
                         {locationName && <span className="shareLocation">Location: {locationName}</span>}
@@ -475,7 +476,7 @@ export default function Share({ triggerRefresh }) {
 //     const submitHandler = async (e) => {
 //         e.preventDefault();
 //         const newPost = {
-//             userId: currentUser._id,
+//             userId: currentUser.user._id,
 //             desc: desc.current.value,
 //         };
 
@@ -704,7 +705,7 @@ export default function Share({ triggerRefresh }) {
 //         if (!validateForm()) return;
 
 //         const newPost = {
-//             userId: currentUser._id,
+//             userId: currentUser.user._id,
 //             desc: desc.current.value,
 //             location: location,
 //             locationName: locationName
@@ -771,7 +772,7 @@ export default function Share({ triggerRefresh }) {
 //                                 style={{ display: "none" }}
 //                                 type="file" id='file'
 //                                 accept='.png,.jpeg,.jpg,.mp4'
-//                                 onChange={handleFilePreview} 
+//                                 onChange={handleFilePreview}
 //                             />
 //                         </label>
 //                         <div className="shareOption" onClick={() => setShowTagModal(true)}>
@@ -831,23 +832,23 @@ export default function Share({ triggerRefresh }) {
 //                             </div>
 //                             <div className="modalBody">
 //                                 <label className="formLabel">Enter tags separated by commas</label>
-//                                 <input 
-//                                     type="text" 
+//                                 <input
+//                                     type="text"
 //                                     className="formInput"
-//                                     placeholder="tag1, tag2, tag3" 
+//                                     placeholder="tag1, tag2, tag3"
 //                                     value={tags}
 //                                     onChange={(e) => setTags(e.target.value)}
 //                                 />
 //                             </div>
 //                             <div className="modalFooter">
-//                                 <button 
-//                                     className="modalBtn cancelBtn" 
+//                                 <button
+//                                     className="modalBtn cancelBtn"
 //                                     onClick={() => setShowTagModal(false)}
 //                                 >
 //                                     Cancel
 //                                 </button>
-//                                 <button 
-//                                     className="modalBtn submitBtn" 
+//                                 <button
+//                                     className="modalBtn submitBtn"
 //                                     onClick={handleTagsSubmit}
 //                                 >
 //                                     Add Tags

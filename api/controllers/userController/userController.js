@@ -45,11 +45,13 @@ const deleteUser = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
+        console.log( "User found in getUser:", user);
         user.followers = await Promise.all(user.followers.map((followerId) => User.findById(followerId)));
         user.followings = await Promise.all(user.followings.map((followingId) => User.findById(followingId)));
 
         const { password, updatedAt, ...other } = user._doc;
         res.status(200).json(other);
+        console.log("User data sent in getUser:", other);
     } catch (err) {
         res.status(500).json(err);
     }

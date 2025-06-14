@@ -17,7 +17,7 @@ export default function Topbar() {
     const { currentUser } = useContext(AuthContext)
 
     const navigate = useNavigate(); // useNavigate hook to programmatically navigate
-    console.log("currentUser in topbar component: ", currentUser);
+    // console.log("currentUser in topbar component: ", currentUser);
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
 

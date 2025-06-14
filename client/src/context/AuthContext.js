@@ -62,7 +62,7 @@ const INITIAL_STATE = {
     isFetching: false,
     error: false,
 };
-console.log("Initial user state from local storage:", INITIAL_STATE.user);
+// console.log("Initial user state from local storage:", INITIAL_STATE.user);
 
 export const AuthContext = createContext(INITIAL_STATE);
 

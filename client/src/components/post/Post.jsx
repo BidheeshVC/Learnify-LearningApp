@@ -51,14 +51,14 @@ export default function Post({ post, user, triggerRefresh }) {
 
     // Check if post is already saved by the user
     useEffect(() => {
-        setIsSaved(post?.savedBy?.includes(currentUser._id));
-    }, [post?.savedBy, currentUser._id]);
+        setIsSaved(post?.savedBy?.includes(currentUser.user._id));
+    }, [post?.savedBy, currentUser.user._id]);
 
     // Handle like button click
     const likeHandler = async () => {
         try {
             await axios.put(`${backend_url}/posts/like/${post._id}`, {
-                userId: currentUser._id,
+                userId: currentUser.user._id,
             });
             setLike(isLiked ? like - 1 : like + 1); // Toggle like count
             setIsLiked(!isLiked); // Toggle like state
@@ -71,10 +71,10 @@ export default function Post({ post, user, triggerRefresh }) {
     const handleSave = async () => {
         console.log(`${backend_url}/posts/${post._id}/save`)
         try {
-           const saveResult = await axios.put(`${backend_url}/posts/${post._id}/save`, {
+            const saveResult = await axios.put(`${backend_url}/posts/${post._id}/save`, {
                 userId: currentUser.user._id,
             });
-console.log("saveResult: ", saveResult.data);
+            console.log("s")
             setIsSaved(!isSaved); // Toggle saved state
         } catch (error) {
             console.error('Error saving post:', error);
@@ -85,7 +85,7 @@ console.log("saveResult: ", saveResult.data);
     const handleSubmitComment = async () => {
         if (!newCommentText.trim()) return; // Do not submit empty comments
         try {
-            const res = await axios.post(`${backend_url}/comments/${post._id}`, { userId: currentUser._id, text: newCommentText, });
+            const res = await axios.post(`${backend_url}/comments/${post._id}`, { userId: currentUser.user._id, text: newCommentText, });
             console.log("Comment submitted:", res.data);
             setComments([...comments, res.data]); // Add new comment to state
             setNewCommentText(''); // Clear input
@@ -120,7 +120,7 @@ console.log("saveResult: ", saveResult.data);
     // Delete a comment by ID
     const handleDeleteComment = async (commentId) => {
         try {
-            const res = await axios.delete(`${backend_url}/comments/${commentId}`, { data: { userId: currentUser._id }, });
+            const res = await axios.delete(`${backend_url}/comments/${commentId}`, { data: { userId: currentUser.user._id }, });
             setComments(comments.filter(comment => comment._id !== commentId)); // Remove from UI
         } catch (error) {
             console.error("Error deleting comment:", error);
@@ -130,7 +130,7 @@ console.log("saveResult: ", saveResult.data);
 
     const handleEditComment = async (commentId) => {
         try {
-            const res = await axios.put(`${backend_url}/comments/${commentId}`, { userId: currentUser._id, text: editCommentText, });
+            const res = await axios.put(`${backend_url}/comments/${commentId}`, { userId: currentUser.user._id, text: editCommentText, });
 
             // Update comment in UI
             setComments(comments.map(comment =>
@@ -164,7 +164,7 @@ console.log("saveResult: ", saveResult.data);
     // Delete a post by ID
     const deletePost = async () => {
         try {
-            const res = await axios.delete(`${backend_url}/posts/${post._id}`, { data: { userId: currentUser._id }, });
+            const res = await axios.delete(`${backend_url}/posts/${post._id}`, { data: { userId: currentUser.user._id }, });
             toast.success(res.data); // Show success message
             setTimeout(() => {
                 triggerRefresh(true); // Refresh post list
@@ -180,7 +180,7 @@ console.log("saveResult: ", saveResult.data);
     // edit post
     const handleEditPost = async () => {
         try {
-            const res = await axios.put(`${backend_url}/posts/${post._id}`, { userId: currentUser._id, desc: editPostDesc, });
+            const res = await axios.put(`${backend_url}/posts/${post._id}`, { userId: currentUser.user._id, desc: editPostDesc, });
             alert("Post updated successfully!");
             console.log("Edit post response from backend:", res.data);
             post.desc = editPostDesc; // Update post description in the state

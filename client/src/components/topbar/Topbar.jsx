@@ -21,24 +21,6 @@ export default function Topbar() {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
 
-    // const [user, setUser] = useState(null); // to store user data from local storage
-
-    // get user data from local storage
-    // useEffect(() => {
-    //   const user = JSON.parse(localStorage.getItem("user"));
-    //   console.log("User data from local storage:------------------------------", user);
-
-    //   if (user) {
-
-    //     user.userId = user._id; // Assuming you want to set userId to _id
-    //     setUser(user);
-    //   } else {
-    //     console.log("User not found in local storage");
-    //   }
-    // }, []);
-
-    // console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr1:", user);
-
     return (
         <div className="topbarContainer">
             <div className="topbarLeft">
@@ -56,22 +38,7 @@ export default function Topbar() {
                 </div>
             </div>
             <div className="topbarRight">
-                {/* <div className="topbarLinks">
-          <span className="topbarLink">Homepage</span>
-          <span className="topbarLink">Timeline</span>
-          <Link
-            to="/login"
-            style={{ textDecoration: "none" }}
-          >
-            <span className="topbarLink">Login</span>
-          </Link>
-          <Link
-            to="/register"
-            style={{ textDecoration: "none" }}
-          >
-            <span className="topbarLink">Register</span>
-          </Link>
-        </div> */}
+             
                 <div className="topbarIcons">
                     <div className="topbarIconItem">
                         <PersonIcon />

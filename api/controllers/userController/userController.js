@@ -76,7 +76,7 @@ const getUsers = async (req, res) => {
     }
 };
 
-// FOLLOW USER & UNFOLLOW USER
+// FOLLOW USER
 const followAndUnfollowUser = async (req, res) => {
     console.log("req body logged in FOLLOW USER & UNFOLLOW USER:", req.body);
     console.log("req params logged in FOLLOW USER & UNFOLLOW USER:", req.params);
@@ -115,38 +115,7 @@ const followAndUnfollowUser = async (req, res) => {
     }
 }
 
-
-// FOLLOW USER
-// const followUser = async (req, res) => {
-//     console.log("req body logged:", req.body);
-//     console.log("req params logged:", req.params);
-//     if (req.body.userId === targetUserId) {
-//         console.log("Attempted to follow self");
-//         return res.status(403).json("You can't follow yourself");
-//     }
-
-//     if (req.body.userId !== req.params.id) {
-//         try {
-//             const user = await User.findById(req.params.id);
-//             console.log("User found:", user);
-//             const currentUser = await User.findById(req.body.userId);
-//             console.log("Current user found:", currentUser);
-
-//             if (!user.followers.includes(req.body.userId)) {
-//                 await user.updateOne({ $push: { followers: req.body.userId } });
-//                 await currentUser.updateOne({ $push: { followings: req.params.id } });
-//                 res.status(200).json("User has been followed");
-//             } else {
-//                 res.status(403).json("You already follow this user");
-//             }
-//         } catch (err) {
-//             res.status(500).json(err);
-//         }
-//     } else {
-//         res.status(403).json("You can't follow yourself");
-//     }
-// };
-
+// FOLLOW and UNFOLLOW a USER
 const followUser = async (req, res) => {
     console.log("req body logged:", req.body);
     console.log("req params logged:", req.params);

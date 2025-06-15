@@ -462,4 +462,3 @@ export default function Post({ post, user, triggerRefresh }) {
         </div>
     );
 }
-// Note: The above code is a complete React component for displaying a post with features like liking, commenting, saving, and deleting posts/comments. It includes state management, API calls, and UI interactions. The component is designed to be reusable and modular, making it easy to integrate into a larger application.

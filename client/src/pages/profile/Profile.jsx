@@ -159,26 +159,7 @@ export default function Profile() {
                         <div className="profileInfo">
                             <h4 className="profileInfoName">{post ? post?.username : currentUser?.username}</h4>
                             <span className="profileInfoDesc">Hello my friends!</span>
-                            {/* 
-                            {userDetails && currentUser.user._id == userDetails._id && (
-                                <div className="profileMenu">
-                                    <button className='editprofilebutton'>Edit Profile</button>
-                                </div>
-                            )} */}
-                            {/* <div className="profileMenu">
-                                <button className='editprofilebutton'>Edit Profile</button>
-                            </div> */}
-
-
-                            {/* Show follow button if it's not your own profile */}
-                            {/* {userDetails && currentUser.user._id !== userDetails._id && (
-
-                                // {userDetails.followers.includes(currentUser.user._id) && 
-                                <button className="followButton" onClick={followHandler}>
-                                    {followed ? "Unfollow" : "Follow"}
-                                </button>
-                            )} */}
-
+                            
                             {userDetails && currentUser.user._id !== userDetails._id ? (
                                 <button className="followButton" onClick={followHandler}>
                                     {followed ? "Unfollow" : "Follow"}

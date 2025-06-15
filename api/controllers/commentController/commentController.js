@@ -35,46 +35,6 @@ const createComment = async (req, res) => {
 
 //// Get comments by post ID
 
-// const getCommentsByPostId = async (req, res) => {
-//     const postId = req.params.postId;
-//     console.log("Fetching comments for post ID:", postId);
-//     try {
-//         const comments = await Comment.find({ postId }).sort({ createdAt: -1 })
-//         // check whether comments exist for the post
-//         if (!comments || comments.length === 0) {
-//             console.log("No comments found for this post.");
-//             return res.status(200).json({ message: "No comments found for this post." });
-//         }
-//          // Fetch user details for each comment
-//         const finalData = await Promise.all(comments.map(async (comment) => {
-//             const user = await User.findById(comment.userId, 'username profilePicture');
-
-//             const result = {
-//                 _id: comment._id,
-//                 text: comment.text, 
-//                 postId: comment.postId,
-//                 userId: comment.userId,
-//                 likes: comment.likes,
-//                 createdAt: comment.createdAt,
-//                 updatedAt: comment.updatedAt,
-//                 username: user ? user.username : null,
-//                 profilePicture: user ? user.profilePicture : null,
-//             }
-//             console.log("Comment with user details:--------------", result);
-
-//             return result;
-//         }));
-
-//         console.log("Final data with user details:", finalData);
-//         res.status(200).json({finalData});
-
-// } catch (err) {
-//     console.error("Error fetching comments:", err);
-//     res.status(500).json({ error: "Failed to fetch comments." });
-// }
-// };
-
-
 const getCommentsByPostId = async (req, res) => {
     const postId = req.params.postId;
     console.log("Fetching comments for post ID:", postId);

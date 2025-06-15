@@ -35,46 +35,6 @@ export default function Register() {
     
   }
 
-
-  // const [username, setUsername] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
-
-  // const navigate = useNavigate(); // Hook for navigation
-
-
-
-  // const handleSignup = (e) => {
-  //   e.preventDefault();
-
-  //   console.log('SIGNUP attempt:', { username, email, password, confirmPassword });
-  //   // Validation checks
-  //   if (!username || !email || !password || !confirmPassword) {
-  //     alert("Please fill in all fields")
-  //     return;
-  //   }
-  //   // check if the password and confirm password match
-  //   if (password !== confirmPassword) {
-  //     alert("Passwords do not match!");
-  //     return;
-  //   }
-  //   axios.post("http://localhost:4000/api/auth/register", { username, email, password })
-  //     .then((res) => {
-  //       if (res.status == 200) {
-  //         alert("User registered successfully")
-  //         console.log("User registered successfully")
-  //         // alert(res.data.message)
-  //       }
-  //       console.log("res data", res.data)
-  //       navigate('/login');
-  //     }).catch((err) => {
-  //       // console.log("error on catch:", err)
-  //       alert(err.response.data.message)
-  //       // alert("Internal server error")
-  //     })
-  // };
-
   return (
     <div className="register-container">
       <form action="" onSubmit={handleSignup}>

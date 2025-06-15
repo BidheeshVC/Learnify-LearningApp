@@ -167,24 +167,7 @@ export default function SavedPost() {
 
                         alt={isSaved[post._id] ? 'saved' : 'save'}
                       />
-                      {/* <MoreVertical
-                        className="postMoreVert"
-                        onClick={() => setMenuOpen(prev => !prev)}
-                      /> */}
-                      {/* {menuOpen && (
-                        <div className="postMenu"> */}
-                      {/* <div
-                            className="postMenuItem"
-                            onClick={() => toggleSave(post._id)}
-                          >
-                            {isSaved[post._id] ? 'Unsave' : 'Save'}
-                          </div> */}
-                      {/* <div className="postMenuItem" onClick={handleDelete}>
-                            Delete Post
-                          </div> */}
-                      {/* <div className="postMenuItem">Report</div>
-                        </div>
-                      )} */}
+                  
                       <MoreVertical
                         ref={iconRef}
                         className="postMoreVert"

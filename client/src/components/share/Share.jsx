@@ -81,28 +81,7 @@ export default function Share({ triggerRefresh }) {
         }
     };
 
-    // const handleTagsSubmit = () => {
-    //     const tagList = tags.split(',')
-    //         .map(tag => tag.trim())
-    //         .filter(tag => tag);
 
-    //     // Store tags in state array for backend
-    //     setTagsArray(tagList);
-
-    //     // Format tags for display in description field
-    //     const formattedTags = tagList.map(tag => `#${tag}`).join(' ');
-
-    //     // Append tags to the description
-    //     if (desc.current.value) {
-    //         desc.current.value = `${desc.current.value} ${formattedTags}`;
-    //     } else {
-    //         desc.current.value = formattedTags;
-    //     }
-
-    //     setShowTagModal(false);
-    // };
-
-    // function to handle tag selection
     const handleTagsSubmit = () => {
         const tagList = tags.split(',')
             .map(tag => tag.trim())
@@ -237,16 +216,6 @@ export default function Share({ triggerRefresh }) {
                     ref={desc}
                 />
 
-                {/* Display selected tags */}
-                {/* {tagsArray.length > 0 && (
-                    <div className="selectedTags">
-                        {tagsArray.map((tag, index) => (
-                            <span key={index} className="tagBadge">
-                                #{tag}
-                            </span>
-                        ))}
-                    </div>
-                )} */}
 
                 {/* Display selected tags with remove option */}
                 {tagsArray.length > 0 && (

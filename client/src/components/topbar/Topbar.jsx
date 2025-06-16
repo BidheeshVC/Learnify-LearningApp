@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import ChatIcon from "@mui/icons-material/Chat";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Logout } from "../../context/AuthActions"; // Import the Logout action
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook for navigation
@@ -19,6 +19,11 @@ export default function Topbar() {
     const navigate = useNavigate(); // useNavigate hook to programmatically navigate
     // console.log("currentUser in topbar component: ", currentUser);
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+     if (!currentUser || currentUser == null) {
+        console.log("No current user found, redirecting to login page.");
+        return <Navigate to="/login" replace />;
+    }
 
 
     return (
@@ -58,7 +63,7 @@ export default function Topbar() {
 
                 </div>
                 {/* <Link to={`/profile/`}> */}
-                <Link to="/profile" state={{ post: currentUser.user }}>
+                <Link to="/profile" state={{ post: currentUser?.user }}>
                     <img
                         src={currentUser?.user?.profilePicture
                             ? currentUser?.user?.profilePicture

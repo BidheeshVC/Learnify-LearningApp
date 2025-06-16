@@ -3,8 +3,8 @@ const {
     updateUser,
     deleteUser,
     getUser,
-    followUser,
-    unfollowUser,
+    // followUser,
+    // unfollowUser,
     getUsers,
     followAndUnfollowUser,
 } = require("../controllers/userController/userController");
@@ -13,8 +13,8 @@ const {
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 router.get("/:id", getUser);
-router.put("/:id/follow", followUser);
-router.put("/:id/unfollow", unfollowUser);
+// router.put("/:id/follow", followUser);
+// router.put("/:id/unfollow", unfollowUser);
 router.put("/:id/followandunfollow",followAndUnfollowUser)
 
 router.get("/online/getUsers", getUsers);

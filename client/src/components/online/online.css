@@ -1,32 +1,71 @@
 .rightbarFriend {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  margin-bottom: 12px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.rightbarFriend:hover {
+  background-color: #f1f1f1;
+}
+
+.rightbarProfile {
+  display: flex;
+  align-items: center;
 }
 
 .rightbarProfileImgContainer {
-    margin-top: 10px;
-    position: relative;
+  position: relative;
 }
 
 .rightbarProfileImg {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
 }
 
 .rightbarOnline {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: limegreen;
-    position: absolute;
-    right: 0;
-    border: 2px solid white;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #28a745; /* green */
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  border: 2px solid white;
 }
 
 .rightbarUsername {
-    font-weight: 500;
-    margin-left: 10px;
+  font-weight: 500;
+  margin-left: 12px;
+  color: #333;
+  font-size: 16px;
+}
+
+.followButton {
+    width: 90px;
+  padding: 6px 18px;
+  background-color: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.followButton:hover {
+  background-color: #0e53bb;
+}
+
+.followButton:active {
+  transform: scale(0.98);
 }

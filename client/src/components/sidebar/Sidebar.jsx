@@ -11,6 +11,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import { Users } from "../../dummyData";
 import CloseFriend from "../closefriend/CloseFriend";
 import { Link } from "react-router-dom";
+import { MoreHorizontal, MoreVertical } from "lucide-react";
 
 
 
@@ -61,8 +62,12 @@ export default function Sidebar() {
                             <span className="sidebarListItemText">Courses</span>
                         </li>
                     </Link>
+                    <li className="sidebarListItem">
+                        <MoreHorizontal className="sidebarIcon" />
+                        <span className="sidebarListItemText">Show More</span>
+                    </li>
                 </ul>
-                <button className="sidebarButton">Show More</button>
+                {/* <button className="sidebarButton">Show More</button> */}
                 <hr className="sidebarHr" />
                 <ul className="sidebarFriendList">
                     {Users.map((u) => (

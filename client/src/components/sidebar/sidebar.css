@@ -1,30 +1,24 @@
+/* SIDEBAR CONTAINER */
 .sidebar {
-  flex: 3;
+  flex: 0 0 260px;
+  background-color: #fff;
   height: calc(100vh - 50px);
-  overflow-y: scroll;
+  overflow-y: auto;
   position: sticky;
   top: 50px;
-  width: 250px;
-  /* or whatever your intended sidebar width is */
-  /* flex-shrink: 0; */
-}
-
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgb(179, 179, 179);
+  border-right: 1px solid #e0e0e0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
 }
 
 .sidebarWrapper {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* LIST STYLE */
 .sidebarList {
   padding: 0;
   margin: 0;
@@ -34,27 +28,78 @@
 .sidebarListItem {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 12px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sidebarListItem:hover {
+  background-color: #f5f5f5;
 }
 
 .sidebarIcon {
-  margin-right: 15px;
+  font-size: 22px;
+  margin-right: 14px;
+  color: #1877f2;
 }
 
-.sidebarButton {
-  width: 150px;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
+.sidebarListItemText {
+  font-size: 16px;
   font-weight: 500;
+  color: #333;
 }
 
+/* FRIEND LIST SECTION */
 .sidebarHr {
   margin: 20px 0;
+  border: none;
+  border-top: 1px solid #e4e4e4;
 }
 
 .sidebarFriendList {
-  padding: 0;
-  margin: 0;
   list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* SCROLLBAR STYLING */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* RESPONSIVE DESIGN */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    flex: 0 0 60px;
+    width: 60px;
+    overflow-x: hidden;
+  }
+
+  .sidebarListItemText {
+    display: none;
+  }
+
+  .sidebarWrapper {
+    padding: 10px 8px;
+  }
+
+  .sidebarIcon {
+    margin-right: 0;
+    font-size: 24px;
+  }
+
+  .sidebarListItem {
+    justify-content: center;
+  }
+
+  .sidebarHr,
+  .sidebarFriendList {
+    display: none;
+  }
 }

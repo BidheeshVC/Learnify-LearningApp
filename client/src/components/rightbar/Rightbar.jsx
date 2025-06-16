@@ -26,27 +26,29 @@ export default function Rightbar({ profile }) {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-          const res = await axios.get(`${backend_url}/users/online/getUsers`);
-          // console.log("Fetched user details in right bar:", res.data);
+        const res = await axios.get(`${backend_url}/users/online/getUsers`);
+        // console.log("Fetched user details in right bar:", res.data);
 
-          // filter out the current user and sort by last online time
-          const filteredUsers= res.data.filter(
-            (u) => u._id!== currentUser?._id
-          )
-          setUserDetails(filteredUsers);
-       
+        // filter out the current user and sort by last online time
+        const filteredUsers = res.data.filter(
+          (u) => u._id !== currentUser?.user?._id
+        )
+        console.log("filtered users list::", filteredUsers)
+        setUserDetails(filteredUsers);
+
       } catch (err) {
-          console.error("Error fetching user details:", err);
+        console.error("Error fetching user details:", err);
       }
-  };
-  fetchUserDetails();
+    };
+    fetchUserDetails();
   }, []);
+
 
 
   const HomeRightbar = () => {
     return (
       <>
-      
+
         <div className="birthdayContainer">
           <img className="birthdayImg" src="assets/gift.png" alt="" />
           <span className="birthdayText">
@@ -54,7 +56,7 @@ export default function Rightbar({ profile }) {
           </span>
         </div>
         <img className="rightbarAd" src="assets/ad.jpg" alt="" />
-        <h4 className="rightbarTitle">Online Friends</h4>
+        <h4 className="rightbarTitle">People You May Know</h4>
         <ul className="rightbarFriendList">
           {userDetails.map((u) => (
             <Online key={u._id} user={u} />

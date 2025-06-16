@@ -18,6 +18,8 @@ export default function Profile() {
 
     console.log("user in profile page from context :::", currentUser)
 
+
+
     const location = useLocation();
     const { post } = location.state || {};
 
@@ -29,6 +31,13 @@ export default function Profile() {
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
     const navigate = useNavigate();
+
+    
+
+    // if (!currentUser) {
+    //     console.log("No current user found, redirecting to login page.");
+    //     return <Navigate to="/login" replace />;
+    // }
 
 
     let backend_url = process.env.BACKEND_URL || "http://localhost:4000/api";
@@ -100,7 +109,10 @@ export default function Profile() {
         window.location.reload(); // Reload the page to reflect the logout
         console.log("User logged out successfully.");
         console.log("Current user after logout----------------:", currentUser);
-        navigate("/login"); // Redirect to login page
+        if (!currentUser || currentUser == null) {
+            navigate("/login"); // Redirect to login page
+        }
+
     };
 
 
@@ -159,7 +171,7 @@ export default function Profile() {
                         <div className="profileInfo">
                             <h4 className="profileInfoName">{post ? post?.username : currentUser?.username}</h4>
                             <span className="profileInfoDesc">Hello my friends!</span>
-                            
+
                             {userDetails && currentUser.user._id !== userDetails._id ? (
                                 <button className="followButton" onClick={followHandler}>
                                     {followed ? "Unfollow" : "Follow"}

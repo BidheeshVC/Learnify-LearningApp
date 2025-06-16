@@ -16,6 +16,13 @@ const App = () => {
 
   const { currentUser } = useContext(AuthContext)
   // console.log("currentUser in app component:", currentUser);
+
+       if (!currentUser || currentUser == null) {
+          console.log("No current user found, redirecting to login page.");
+          return <Navigate to="/login" replace />;
+      }
+
+
   return (
     <>
       <Router>

@@ -33,7 +33,7 @@ export default function Rightbar({ profile }) {
         const filteredUsers = res.data.filter(
           (u) => u._id !== currentUser?.user?._id
         )
-        console.log("filtered users list::", filteredUsers)
+        // console.log("filtered users list::", filteredUsers)
         setUserDetails(filteredUsers);
 
       } catch (err) {

@@ -7,11 +7,11 @@ const User = require("../../models/User");
 const createComment = async (req, res) => {
 
     const postId = req.params.postId;
-    console.log("Creating comment for post ID:------------------------------", postId);
+    // console.log("Creating comment for post ID:------------------------------", postId);
 
 
     const { userId, text } = req.body;
-    console.log("User ID:", userId, "Text:", text);
+    // console.log("User ID:", userId, "Text:", text);
 
     if (!userId || !postId || !text) {
         return res.status(400).json({ error: "User ID and text are required." });
@@ -22,11 +22,11 @@ const createComment = async (req, res) => {
         postId: postId,
         text: text,
     });
-    console.log("New comment object:", newComment);
+    // console.log("New comment object:", newComment);
 
     try {
         const savedComment = await newComment.save();
-        console.log("Comment saved successfully:", savedComment);
+        // console.log("Comment saved successfully:", savedComment);
         res.status(200).json(savedComment);
     } catch (err) {
         res.status(500).json({ err: "Failed to create comment." });
@@ -37,7 +37,7 @@ const createComment = async (req, res) => {
 
 const getCommentsByPostId = async (req, res) => {
     const postId = req.params.postId;
-    console.log("Fetching comments for post ID:", postId);
+    // console.log("Fetching comments for post ID:", postId);
 
     try {
         const comments = await Comment.find({ postId }).sort({ createdAt: -1 });
@@ -89,11 +89,11 @@ const getCommentsByPostId = async (req, res) => {
 const deleteComment = async (req, res) => {
     try {
         const commentId = req.params.id;
-        console.log("Deleting comment with ID:----------------", commentId);
+        // console.log("Deleting comment with ID:----------------", commentId);
         // userId = req.body.userId;
 
         const comment = await Comment.findById(commentId);
-        console.log("Comment found:------------------", comment);
+        // console.log("Comment found:------------------", comment);
         if (!comment) {
             return res.status(404).json({ error: "Comment not found." });
         }
@@ -104,7 +104,7 @@ const deleteComment = async (req, res) => {
         await Comment.findByIdAndDelete
             (commentId);
 
-        console.log("Comment deleted successfully.");
+        // console.log("Comment deleted successfully.");
         res.status(200).json({ message: "Comment deleted successfully." });
     }
     catch (err) {
@@ -117,27 +117,27 @@ const deleteComment = async (req, res) => {
 
 const updateComment = async (req, res) => {
     try {
-        console.log("Update comment request received.------------------------", req.body);
+        // console.log("Update comment request received.------------------------", req.body);
         const userId = req.body.userId;
-        console.log("User ID for update:", userId);
+        // console.log("User ID for update:", userId);
         const commentId = req.params.id;
-        console.log("Updating comment with ID:", commentId);
+        // console.log("Updating comment with ID:", commentId);
         const { text } = req.body;
-        console.log("text----------", text)
+        // console.log("text----------", text)
 
         const comment = await Comment.findById(commentId);
-        console.log("Comment found for update:", comment);
+        // console.log("Comment found for update:", comment);
         if (!comment) {
             return res.status(404).json({ error: "Comment not found." });
         }
         // Check if the user is authorized to update the comment
-        console.log("Comment user ID---------:", comment.userId, "Current user ID-------------:", userId);
+        // console.log("Comment user ID---------:", comment.userId, "Current user ID-------------:", userId);
         if (comment.userId !== userId) {
             return res.status(403).json({ error: "You can only update your own comments." });
         }
         await Comment.findByIdAndUpdate(commentId, { text: text }, { new: true });
 
-        console.log("Comment updated successfully.");
+        // console.log("Comment updated successfully.");
         res.status(200).json({ message: "Comment updated successfully." });
     } catch (err) {
         console.error("Error updating comment:", err);

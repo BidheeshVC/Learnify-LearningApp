@@ -45,13 +45,13 @@ const deleteUser = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
-        console.log( "User found in getUser:", user);
+        // console.log("User found in getUser:", user);
         user.followers = await Promise.all(user.followers.map((followerId) => User.findById(followerId)));
         user.followings = await Promise.all(user.followings.map((followingId) => User.findById(followingId)));
 
         const { password, updatedAt, ...other } = user._doc;
         res.status(200).json(other);
-        console.log("User data sent in getUser:", other);
+        // console.log("User data sent in getUser:", other);
     } catch (err) {
         res.status(500).json(err);
     }
@@ -91,7 +91,7 @@ const followAndUnfollowUser = async (req, res) => {
     }
 
     if (followingUserId.toString() === targetUserId.toString()) {
-        console.log("Attempted to follow self"); 
+        console.log("Attempted to follow self");
         return res.status(403).json("You can't follow yourself");
     }
 
@@ -114,6 +114,49 @@ const followAndUnfollowUser = async (req, res) => {
         res.status(500).json("Error in following And Unfollowing User");
     }
 }
+
+// edit profile of user
+
+const editUserDetails = async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        console.log("user id from params", userId)
+
+        // Validate the logged-in user is editing their own profile
+        if (req.body.userId !== userId) {
+            return res.status(403).json("You can update only your own profile.");
+        }
+
+        // Build the update object
+        const updateData = {
+            username: req.body.username,
+            desc: req.body.description,
+        };
+        console.log("update data--------------------------------------------------------------",updateData)
+
+        // Handle optional files
+        if (req.files) {
+            if (req.files.profilePicture) {
+                updateData.profilePicture = req.files.profilePicture[0].filename;
+            }
+
+            if (req.files.coverPicture) {
+                updateData.coverPicture = req.files.coverPicture[0].filename;
+            }
+        }
+
+        // Update user in DB
+        const updatedUser = await User.findByIdAndUpdate(userId, { $set: updateData }, { new: true });
+        console.log("updated user ----------------", updatedUser)
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error("Edit user profile error:", error);
+        return res.status(500).json({ message: "Server error during profile update" });
+    }
+};
+
 
 // FOLLOW and UNFOLLOW a USER
 // const followUser = async (req, res) => {
@@ -176,4 +219,5 @@ module.exports = {
     // unfollowUser,
     getUsers,
     followAndUnfollowUser,
+    editUserDetails
 };

@@ -1,22 +1,23 @@
 // controllers/postController/postController.js
-
+const fs = require("fs");
+const path = require("path");
 const Comment = require("../../models/Comment");
 const Post = require("../../models/Post");
 const User = require("../../models/User");
 
 const createPost = async (req, res) => {
-    // console.log("request body-----------: ", req.body);
+    console.log("request body-----------: ", req.body);
     const newPost = new Post({
         ...req.body,
         tags: req.body.tags || [], // Default empty array if no tags
         emojis: req.body.emojis || [], // Default empty array if no emojis
         location: req.body.location || { lat: 0, long: 0 }, // Default location if not provided
     });
-    // console.log("create post--------", newPost)
+    console.log("create post--------", newPost)
 
     try {
         const savedPost = await newPost.save();
-        // console.log("saved post-----------", savedPost)
+        console.log("saved post-----------", savedPost)
         res.status(200).json(savedPost);
     } catch (err) {
         res.status(500).json(err);
@@ -43,17 +44,52 @@ const updatePost = async (req, res) => {
 };
 
 // DELETE POST
+// const deletePost = async (req, res) => {
+//     try {
+//         const post = await Post.findById(req.params.id);
+//         if (post.userId.toString() === req.body.userId) {
+//             await post.deleteOne();
+//             res.status(200).json("The post has been deleted");
+//         } else {
+//             res.status(403).json("You can delete only your post");
+//         }
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
+// };
+
+// DELETE POST
 const deletePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
-        if (post.userId.toString() === req.body.userId) {
-            await post.deleteOne();
-            res.status(200).json("The post has been deleted");
-        } else {
-            res.status(403).json("You can delete only your post");
+        console.log("post in delete post::", post)
+
+        if (!post) {
+            return res.status(404).json("Post not found");
         }
+
+        if (post.userId !== req.body.userId) {
+            return res.status(403).json("You can delete only your own post");
+        }
+
+        // Delete image from filesystem if it exists
+        if (post.img) {
+            const imagePath = path.join(process.cwd(), "public/images", post.img);
+            fs.unlink(imagePath, (err) => {
+                if (err) {
+                    console.error("Error deleting image file:", err);
+                } else {
+                    console.log("Deleted image file:", post.img);
+                }
+            });
+        }
+
+        // Delete the post from MongoDB
+        await post.deleteOne();
+        res.status(200).json("The post has been deleted successfully");
     } catch (err) {
-        res.status(500).json(err);
+        console.error(err);
+        res.status(500).json("Something went wrong while deleting the post");
     }
 };
 
@@ -123,7 +159,7 @@ const getAllPosts = async (req, res) => {
                 };
             })
         );
-        console.log("posts with user details", postsWithUserDetails)
+        // console.log("posts with user details", postsWithUserDetails)
         res.status(200).json(postsWithUserDetails);
     } catch (err) {
         res.status(500).json(err);
@@ -185,7 +221,7 @@ const getMySavedPosts = async (req, res) => {
 
     try {
         const savedPost = await Post.find({ savedBy: userId })
-        console.log("saved posts list----", savedPost)
+        // console.log("saved posts list----", savedPost)
 
         const postsWithUser = await Promise.all(
             savedPost.map(async (post) => {
@@ -197,7 +233,7 @@ const getMySavedPosts = async (req, res) => {
                 };
             })
         );
-        console.log("post with user----------", postsWithUser)
+        // console.log("post with user----------", postsWithUser)
         return res.status(200).json(postsWithUser)
 
     } catch (err) {

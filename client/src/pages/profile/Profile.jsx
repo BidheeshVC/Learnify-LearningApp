@@ -16,7 +16,7 @@ export default function Profile() {
 
     const { currentUser } = useContext(AuthContext)
 
-    console.log("user in profile page from context :::", currentUser)
+    // console.log("user in profile page from context :::", currentUser)
 
 
 
@@ -32,6 +32,14 @@ export default function Profile() {
 
     const navigate = useNavigate();
 
+    const [editForm, setEditForm] = useState({
+        username: currentUser?.user?.username || "",
+        desc: currentUser?.user?.description || "",
+        profilePicture: null,
+        coverPicture: null
+    });
+
+
 
     let backend_url = process.env.BACKEND_URL || "http://localhost:4000/api";
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -40,16 +48,16 @@ export default function Profile() {
     const fetchUserDetails = async () => {
         try {
             const userIdForPosts = post?.userId || currentUser?.user?._id || null;
-            console.log("Fetching user details for userId:", userIdForPosts);
+            // console.log("Fetching user details for userId:", userIdForPosts);
             const res = await axios.get(`${backend_url}/users/${userIdForPosts}`);
-            console.log("Fetched user details++++++++++++++++++++:", res.data);
+            // console.log("Fetched user details++++++++++++++++++++:", res.data);
             setUserDetails(res.data);
 
             const isFollowing = res.data.followers?.some(
                 (followerId) => followerId._id.toString() === currentUser.user._id
             );
 
-            console.log("is following:", isFollowing);
+            // console.log("is following:", isFollowing);
 
             setFollowed(isFollowing);
         } catch (err) {
@@ -61,7 +69,7 @@ export default function Profile() {
     const fetchUserPosts = async (userIdForPosts) => {
         try {
             const res = await axios.get(`${backend_url}/posts/profile/${userIdForPosts}`);
-            console.log("Fetched user posts:", res.data);
+            // console.log("Fetched user posts:", res.data);
             setUserPosts(res.data);
         } catch (err) {
             console.error("Error fetching user posts:", err);
@@ -72,7 +80,7 @@ export default function Profile() {
     useEffect(() => {
         // When coming from a post, use post.userId instead of post._id
         let userIdForPosts = post?.userId || currentUser?.user._id || null;
-        console.log("User ID for posts:", userIdForPosts);
+        // console.log("User ID for posts:", userIdForPosts);
         fetchUserPosts(userIdForPosts);
         fetchUserDetails(userIdForPosts);
 
@@ -110,9 +118,43 @@ export default function Profile() {
 
     // edit profile
 
-    const handleEditProfileSubmit = async (e) =>{
+    const handleInputChange = (e) => {
+        const { name, value, files } = e.target;
+        if (files) {
+            setEditForm((prev) => ({ ...prev, [name]: files[0] }));
+        } else {
+            setEditForm((prev) => ({ ...prev, [name]: value }));
+        }
+    };
+
+
+    const handleEditProfileSubmit = async (e) => {
         e.preventDefault();
-        
+
+        const formData = new FormData();
+        formData.append("userId", currentUser.user._id);
+        formData.append("username", editForm.username);
+        formData.append("description", editForm.desc);
+        if (editForm.profilePicture) formData.append("profilePicture", editForm.profilePicture);
+        if (editForm.coverPicture) formData.append("coverPicture", editForm.coverPicture);
+
+        try {
+            const res = await axios.put(`${backend_url}/users/edit/${currentUser.user._id}`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            toast.success("Profile updated successfully");
+            console.log("Profile updated successfull")
+            console.log("Updated user::::::::::::::::::::::", res);
+
+            setShowEditProfileModal(false);
+            window.location.reload(); // You can also update local state instead of reload
+
+        } catch (err) {
+            console.error("Error fetching user posts:", err);
+        }
+
     }
 
 
@@ -157,7 +199,7 @@ export default function Profile() {
                         </div> */}
                         <div className="profileInfo">
                             <h4 className="profileInfoName">{post ? post?.username : currentUser?.user?.username}</h4>
-                            <span className="profileInfoDesc">Hello my friends!</span>
+                            <span className="profileInfoDesc">{post ? post?.desc : currentUser?.user?.desc}</span>
 
                             {userDetails && currentUser.user._id !== userDetails._id ? (
                                 <button className="followButton" onClick={followHandler}>
@@ -195,7 +237,9 @@ export default function Profile() {
                                                     type="text"
                                                     id="username"
                                                     name="username"
-                                                    placeholder={post ? post?.username : currentUser?.username}
+                                                    value={editForm.username}
+                                                    onChange={handleInputChange}
+                                                    placeholder={post ? post?.username : currentUser?.user?.username}
                                                     required
                                                 />
                                             </div>
@@ -205,19 +249,31 @@ export default function Profile() {
                                                 <textarea
                                                     id="description"
                                                     name="description"
-                                                    placeholder={post ? post?.description : currentUser?.description}
+                                                    value={editForm.desc}
+                                                    onChange={handleInputChange}
+                                                    placeholder={post ? post?.desc : currentUser?.user?.desc}
                                                     rows="3"
                                                 />
                                             </div>
 
                                             <div className="form-group">
                                                 <label htmlFor="profilePicture">Profile Picture</label>
-                                                <input type="file" id="profilePicture" accept="image/*" />
+                                                <input
+                                                    type="file"
+                                                    id="profilePicture"
+                                                    name="profilePicture"
+                                                    accept="image/*"
+                                                    onChange={handleInputChange} />
                                             </div>
 
                                             <div className="form-group">
                                                 <label htmlFor="coverPicture">Cover Picture</label>
-                                                <input type="file" id="coverPicture" accept="image/*" />
+                                                <input
+                                                    type="file"
+                                                    id="coverPicture"
+                                                    name="coverPicture"
+                                                    accept="image/*"
+                                                    onChange={handleInputChange} />
                                             </div>
 
                                             <div className="form-actions">

@@ -14,7 +14,7 @@ export default function Post({ post, user, triggerRefresh }) {
     // console.log("Post component rendered with post:", post);
     const { currentUser } = useContext(AuthContext); // Logged-in user's info
 
-    console.log("user id got in post component:----------------", currentUser.user._id);
+    // console.log("user id got in post component:----------------", currentUser.user._id);
 
     // STATE VARIABLES
     const [like, setLike] = useState(post.likes.length); // Number of likes

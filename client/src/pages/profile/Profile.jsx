@@ -32,13 +32,6 @@ export default function Profile() {
 
     const navigate = useNavigate();
 
-    
-
-    // if (!currentUser) {
-    //     console.log("No current user found, redirecting to login page.");
-    //     return <Navigate to="/login" replace />;
-    // }
-
 
     let backend_url = process.env.BACKEND_URL || "http://localhost:4000/api";
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -115,6 +108,13 @@ export default function Profile() {
 
     };
 
+    // edit profile
+
+    const handleEditProfileSubmit = async (e) =>{
+        e.preventDefault();
+        
+    }
+
 
 
     const coverImage = post?.coverPicture
@@ -141,25 +141,12 @@ export default function Profile() {
                 <div className="profileRight">
                     <div className="profileRightTop">
                         <div className="profileCover">
-                            {/* <img
-                                    className="profileCoverImg"
-                                    // src={post.coverPicture ? PF + post.coverPicture  : user.coverPicture || PF + "person/noCover.png"}
-                                    // src={
-                                    //     post.coverPicture
-                                    //       ? PF + post.coverPicture
-                                    //       : user.coverPicture
-                                    //       ? PF + user.coverPicture
-                                    //       : PF + "person/noCover.png"
-                                    //   }
-                                    
-                                    alt=""
-                                /> */
+                            {
                                 <img className="profileCoverImg" src={coverImage} alt="Cover" />
                             }
 
                             <img
                                 className="profileUserImg"
-                                // src={post?.profilePicture || PF + "person/noAvatar.png"}
                                 src={profileImage}
                                 alt=""
                             />
@@ -169,7 +156,7 @@ export default function Profile() {
                             <span className="profileInfoDesc">Hello my friends!</span>
                         </div> */}
                         <div className="profileInfo">
-                            <h4 className="profileInfoName">{post ? post?.username : currentUser?.username}</h4>
+                            <h4 className="profileInfoName">{post ? post?.username : currentUser?.user?.username}</h4>
                             <span className="profileInfoDesc">Hello my friends!</span>
 
                             {userDetails && currentUser.user._id !== userDetails._id ? (
@@ -201,7 +188,7 @@ export default function Profile() {
                                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
                                     >
                                         <h2>Edit Profile</h2>
-                                        <form className="edit-profile-form">
+                                        <form className="edit-profile-form" onSubmit={handleEditProfileSubmit}>
                                             <div className="form-group">
                                                 <label htmlFor="username">Username</label>
                                                 <input

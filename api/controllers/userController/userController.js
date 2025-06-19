@@ -1,5 +1,6 @@
 // controllers/userController/userController.js
 
+const Post = require("../../models/Post");
 const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 
@@ -76,6 +77,31 @@ const getUsers = async (req, res) => {
     }
 };
 
+// get profile details 
+const getPrifileDetails = async (req, res) => {
+    profileUserId = req.params.id
+    let profileData = {};
+    try {
+        const user = await User.findById(profileUserId)
+        const userPosts = await Post.find({ userId: profileUserId })
+
+
+        profileData.user = user;
+        profileData.userPosts = userPosts;
+
+        console.log("profile data in get profile details API:", profileData)
+        res.status(200).json(profileData);
+    } catch (err) {
+        res.status(500).json(err);
+
+    }
+
+
+
+
+
+}
+
 // FOLLOW USER
 const followAndUnfollowUser = async (req, res) => {
     console.log("req body logged in FOLLOW USER & UNFOLLOW USER:", req.body);
@@ -133,7 +159,7 @@ const editUserDetails = async (req, res) => {
             username: req.body.username,
             desc: req.body.description,
         };
-        console.log("update data--------------------------------------------------------------",updateData)
+        console.log("update data--------------------------------------------------------------", updateData)
 
         // Handle optional files
         if (req.files) {
@@ -219,5 +245,6 @@ module.exports = {
     // unfollowUser,
     getUsers,
     followAndUnfollowUser,
-    editUserDetails
+    editUserDetails,
+    getPrifileDetails
 };

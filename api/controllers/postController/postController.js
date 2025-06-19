@@ -187,6 +187,8 @@ const getUserPostsByUserId = async (req, res) => {
     }
 };
 
+
+
 // SAVE/UNSAVE POST
 const savePost = async (req, res) => {
     const postId = req.params.id;
@@ -254,5 +256,6 @@ module.exports = {
     getAllPosts,
     getUserPostsByUsername,
     getUserPostsByUserId,
+    
 };
 

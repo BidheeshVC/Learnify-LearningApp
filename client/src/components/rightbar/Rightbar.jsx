@@ -31,7 +31,7 @@ export default function Rightbar({ profile }) {
 
         // filter out the current user and sort by last online time
         const filteredUsers = res.data.filter(
-          (u) => u._id !== currentUser?.user?._id
+          (u) => u._id !== currentUser?._id
         )
         // console.log("filtered users list::", filteredUsers)
         setUserDetails(filteredUsers);
@@ -73,15 +73,15 @@ export default function Rightbar({ profile }) {
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">email:</span>
-            <span className="rightbarInfoValue">{currentUser?.user.email}</span>
+            <span className="rightbarInfoValue">{currentUser?.email}</span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">IsAdmin:</span>
-            <span className="rightbarInfoValue">{currentUser?.user.isAdmin ? "Admin" : "User"} </span>
+            <span className="rightbarInfoValue">{currentUser?.isAdmin ? "Admin" : "User"} </span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">User Since:</span>
-            <span className="rightbarInfoValue">{format(currentUser?.user.createdAt)}</span>
+            <span className="rightbarInfoValue">{format(currentUser?.createdAt)}</span>
           </div>
         </div>
         <h4 className="rightbarTitle">User followers</h4>

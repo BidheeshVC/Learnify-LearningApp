@@ -11,7 +11,7 @@ function Home() {
 
   const navigate = useNavigate();
   const {currentUser} =  useContext(AuthContext)
-  // console.log("user in home component: ", user);
+  console.log("user in home component: ", currentUser);
 
   if (!currentUser) {
     navigate("/login");

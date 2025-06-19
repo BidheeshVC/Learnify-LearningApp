@@ -26,6 +26,10 @@ export default function Share({ triggerRefresh }) {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [selectedEmojis, setSelectedEmojis] = useState([]);
 
+    
+    let backend_url = process.env.BACKEND_URL || "http://localhost:4000/api";
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     // Common emojis for quick selection
     const commonEmojis = ['😊', '👍', '❤️', '🎉', '😂', '🔥', '✨', '😎', '🙌', '👏'];
 
@@ -152,7 +156,7 @@ export default function Share({ triggerRefresh }) {
         if (!validateForm()) return;
 
         const newPost = {
-            userId: currentUser.user._id,
+            userId: currentUser?.user?._id,
             desc: desc.current.value,
             location: location,
             locationName: locationName,
@@ -203,7 +207,7 @@ export default function Share({ triggerRefresh }) {
         <div className="share">
             <div className="shareWrapper">
                 <div className="shareTop">
-                    <img className="shareProfileImg" src={currentUser?.user?.profilePicture
+                    <img className="shareProfileImg" src={PF + currentUser?.user?.profilePicture
                         || "/assets/person/noAvatar.png"} alt="" />
                     <div className="shareUserInfo">
                         <span className="shareUsername">{currentUser?.user?.username}</span>
@@ -211,7 +215,7 @@ export default function Share({ triggerRefresh }) {
                     </div>
                 </div>
                 <textarea
-                    placeholder={"What's in your mind " + currentUser?.username + "?"}
+                    placeholder={"What's in your mind " + currentUser?.user?.name + "?"}
                     className="shareInput"
                     ref={desc}
                 />
@@ -445,7 +449,7 @@ export default function Share({ triggerRefresh }) {
 //     const submitHandler = async (e) => {
 //         e.preventDefault();
 //         const newPost = {
-//             userId: currentUser.user._id,
+//             userId: currentUser?._id,
 //             desc: desc.current.value,
 //         };
 
@@ -484,7 +488,7 @@ export default function Share({ triggerRefresh }) {
 //                 <div className="shareTop">
 //                     <img className="shareProfileImg" src={currentUser?.profilePicture} alt="" />
 //                     <input
-//                         placeholder={"What's in your mind " + currentUser?.username + "?"}
+//                         placeholder={"What's in your mind " + currentUser?name + "?"}
 //                         className="shareInput"
 //                         ref={desc}
 //                     />
@@ -674,7 +678,7 @@ export default function Share({ triggerRefresh }) {
 //         if (!validateForm()) return;
 
 //         const newPost = {
-//             userId: currentUser.user._id,
+//             userId: currentUser?._id,
 //             desc: desc.current.value,
 //             location: location,
 //             locationName: locationName
@@ -722,12 +726,12 @@ export default function Share({ triggerRefresh }) {
 //                 <div className="shareTop">
 //                     <img className="shareProfileImg" src={currentUser?.profilePicture || "/assets/person/noAvatar.png"} alt="" />
 //                     <div className="shareUserInfo">
-//                         <span className="shareUsername">{currentUser?.username}</span>
+//                         <span className="shareUsername">{currentUser?name}</span>
 //                         {locationName && <span className="shareLocation">Location: {locationName}</span>}
 //                     </div>
 //                 </div>
 //                 <textarea
-//                     placeholder={"What's in your mind " + currentUser?.username + "?"}
+//                     placeholder={"What's in your mind " + currentUser?name + "?"}
 //                     className="shareInput"
 //                     ref={desc}
 //                 />

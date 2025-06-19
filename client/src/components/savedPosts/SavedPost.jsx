@@ -57,7 +57,7 @@ export default function SavedPost() {
 
 
   useEffect(() => {
-    const userId = currentUser?.user?._id
+    const userId = currentUser?._id
     if (!userId) return
     const fetchSaved = async () => {
       try {
@@ -82,7 +82,7 @@ export default function SavedPost() {
 
   const likeHandler = async postId => {
     try {
-      await axios.put(`${backend_url}/posts/${postId}/like`, { userId: currentUser?.user?._id })
+      await axios.put(`${backend_url}/posts/${postId}/like`, { userId: currentUser?._id })
       setLikeCounts(prev => ({
         ...prev,
         [postId]: isLiked[postId] ? prev[postId] - 1 : prev[postId] + 1
@@ -96,7 +96,7 @@ export default function SavedPost() {
   const toggleSave = async postId => {
     console.log("post id toggleSave", postId)
     try {
-      const res = await axios.put(`${backend_url}/posts/${postId}/save`, { userId: currentUser?.user?._id })
+      const res = await axios.put(`${backend_url}/posts/${postId}/save`, { userId: currentUser?._id })
       // console.log("response check in toggle save::", res.status)
       if (res.status == 200) {
         setFetchData(!fetchData)
@@ -119,12 +119,12 @@ export default function SavedPost() {
   }
 
   useEffect(() => {
-    if (savedPosts?.savedBy?.includes(currentUser?.user?._id)) {
+    if (savedPosts?.savedBy?.includes(currentUser?._id)) {
       setIsSaved(true);
     } else {
       setIsSaved(false);
     }
-  }, [savedPosts?.savedBy, currentUser?.user?._id]);
+  }, [savedPosts?.savedBy, currentUser?._id]);
 
   return (
     <>

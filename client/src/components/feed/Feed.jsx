@@ -21,7 +21,7 @@ export default function Feed() {
       let backend_url = process.env.BACKEND_URL || "http://localhost:4000/api";
 
       const res = await axios.get(`${backend_url}/posts/feed/allposts`);
-
+      console.log("what is this", res.data)
       setPost(res.data);
 
     } catch (err) {

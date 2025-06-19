@@ -40,7 +40,8 @@ const {
     getUser,
     getUsers,
     followAndUnfollowUser,
-    editUserDetails
+    editUserDetails,
+    getPrifileDetails
 } = require("../controllers/userController/userController");
 
 // Setup multer
@@ -65,6 +66,8 @@ router.put("/edit/:id", upload.fields([
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 router.get("/:id", getUser);
+router.get("/profile/:id",getPrifileDetails)
+
 router.put("/:id/followandunfollow", followAndUnfollowUser);
 router.get("/online/getUsers", getUsers);
 

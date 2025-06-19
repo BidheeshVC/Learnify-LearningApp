@@ -10,21 +10,28 @@ const AuthReducer = (state, action) => {
             localStorage.setItem("user", JSON.stringify(action.payload));
             console.log("User data saved to local storage:", action.payload);
             return {
-                user: action.payload,
+                currentUser: action.payload,
                 isFetching: false,
                 error: false,
             };
         case "LOGIN_FAILURE":
             return {
-                user: null,
+                currentUser: null,
                 isFetching: false,
                 error: action.payload,
             };
         case "LOGOUT":
+            localStorage.removeItem("user");
             return {
-                user: null,
+                currentUser: null,
                 isFetching: false,
                 error: false,
+            };
+        case "UPDATE":
+            localStorage.setItem("user", JSON.stringify(action.payload)); // ✅ Save updated currentUser
+            return {
+                ...state,
+                currentUser: action.payload,
             };
         default:
             return state;

@@ -11,10 +11,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import ConfirmModal from '../confirmModal/confirmModal.jsx'; // Reusable confirmation modal component
 
 export default function Post({ post, user, triggerRefresh }) {
-    // console.log("Post component rendered with post:", post);
+    console.log("Post component rendered with post:", post);
     const { currentUser } = useContext(AuthContext); // Logged-in user's info
 
-    // console.log("user id got in post component:----------------", currentUser.user._id);
+    // console.log("user id got in post component:----------------", currentUser?._id);
 
     // STATE VARIABLES
     const [like, setLike] = useState(post.likes.length); // Number of likes
@@ -51,14 +51,14 @@ export default function Post({ post, user, triggerRefresh }) {
 
     // Check if post is already saved by the user
     useEffect(() => {
-        setIsSaved(post?.savedBy?.includes(currentUser.user._id));
-    }, [post?.savedBy, currentUser.user._id]);
+        setIsSaved(post?.savedBy?.includes(currentUser._id));
+    }, [post?.savedBy, currentUser?._id]);
 
     // Handle like button click
     const likeHandler = async () => {
         try {
             await axios.put(`${backend_url}/posts/like/${post._id}`, {
-                userId: currentUser.user._id,
+                userId: currentUser?._id,
             });
             setLike(isLiked ? like - 1 : like + 1); // Toggle like count
             setIsLiked(!isLiked); // Toggle like state
@@ -72,7 +72,7 @@ export default function Post({ post, user, triggerRefresh }) {
         console.log(`${backend_url}/posts/${post._id}/save`)
         try {
             const saveResult = await axios.put(`${backend_url}/posts/${post._id}/save`, {
-                userId: currentUser.user._id,
+                userId: currentUser?._id,
             });
             console.log("s")
             setIsSaved(!isSaved); // Toggle saved state
@@ -85,7 +85,7 @@ export default function Post({ post, user, triggerRefresh }) {
     const handleSubmitComment = async () => {
         if (!newCommentText.trim()) return; // Do not submit empty comments
         try {
-            const res = await axios.post(`${backend_url}/comments/${post._id}`, { userId: currentUser.user._id, text: newCommentText, });
+            const res = await axios.post(`${backend_url}/comments/${post._id}`, { userId: currentUser?._id, text: newCommentText, });
             console.log("Comment submitted:", res.data);
             setComments([...comments, res.data]); // Add new comment to state
             setNewCommentText(''); // Clear input
@@ -120,7 +120,7 @@ export default function Post({ post, user, triggerRefresh }) {
     // Delete a comment by ID
     const handleDeleteComment = async (commentId) => {
         try {
-            const res = await axios.delete(`${backend_url}/comments/${commentId}`, { data: { userId: currentUser.user._id }, });
+            const res = await axios.delete(`${backend_url}/comments/${commentId}`, { data: { userId: currentUser?._id }, });
             setComments(comments.filter(comment => comment._id !== commentId)); // Remove from UI
         } catch (error) {
             console.error("Error deleting comment:", error);
@@ -130,7 +130,7 @@ export default function Post({ post, user, triggerRefresh }) {
 
     const handleEditComment = async (commentId) => {
         try {
-            const res = await axios.put(`${backend_url}/comments/${commentId}`, { userId: currentUser.user._id, text: editCommentText, });
+            const res = await axios.put(`${backend_url}/comments/${commentId}`, { userId: currentUser?._id, text: editCommentText, });
 
             // Update comment in UI
             setComments(comments.map(comment =>
@@ -164,7 +164,7 @@ export default function Post({ post, user, triggerRefresh }) {
     // Delete a post by ID
     const deletePost = async () => {
         try {
-            const res = await axios.delete(`${backend_url}/posts/${post._id}`, { data: { userId: currentUser.user._id }, });
+            const res = await axios.delete(`${backend_url}/posts/${post._id}`, { data: { userId: currentUser?._id }, });
             toast.success(res.data); // Show success message
             setTimeout(() => {
                 triggerRefresh(true); // Refresh post list
@@ -180,7 +180,7 @@ export default function Post({ post, user, triggerRefresh }) {
     // edit post
     const handleEditPost = async () => {
         try {
-            const res = await axios.put(`${backend_url}/posts/${post._id}`, { userId: currentUser.user._id, desc: editPostDesc, });
+            const res = await axios.put(`${backend_url}/posts/${post._id}`, { userId: currentUser?._id, desc: editPostDesc, });
             alert("Post updated successfully!");
             console.log("Edit post response from backend:", res.data);
             post.desc = editPostDesc; // Update post description in the state
@@ -222,16 +222,23 @@ export default function Post({ post, user, triggerRefresh }) {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    const profileImage = post?.profilePicture
+        ? post?.profilePicture
+        :  currentUser?.profilePicture
+            ? PF + currentUser?.profilePicture
+            : PF + "person/noCover.png";
+
     return (
         <div className="post">
             <div className="postWrapper">
                 {/* Top Section - User Info */}
                 <div className="postTop">
                     <div className="postTopLeft">
-                        <Link to="/profile" state={{ post }} style={{ textDecoration: 'none' }}>
+                        <Link to="/profile" state={{ userId: post.userId }} style={{ textDecoration: 'none' }}>
                             <img
                                 className="postProfileImg"
-                                src={post?.profilePicture || user?.profilePicture}
+                                // src={post?.profilePicture || user?.profilePicture}
+                                src={profileImage}
                                 alt="profile"
                             />
                         </Link>

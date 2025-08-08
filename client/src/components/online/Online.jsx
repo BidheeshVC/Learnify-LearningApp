@@ -9,15 +9,25 @@ import axios from 'axios';
 
 
 export default function Online({ user }) {
+
     // console.log("user in online=========", user)
+
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     let backend_url = process.env.BACKEND_URL || "http://localhost:4000/api";
 
     const { currentUser } = useContext(AuthContext);
     const [followed, setFollowed] = useState(false);
 
+    // useEffect(() => {
+    //     if (user?.followings?.includes(currentUser?.user?._id)) {
+    //         setFollowed(true);
+    //     } else {
+    //         setFollowed(false);
+    //     }
+    // }, [user, currentUser]);
+
     useEffect(() => {
-        if (user?.followings?.includes(currentUser?._id)) {
+        if (user?.followers?.includes(currentUser?.user?._id)) {
             setFollowed(true);
         } else {
             setFollowed(false);
@@ -30,7 +40,7 @@ export default function Online({ user }) {
         // console.log("user id in follow handler::", userId)
         try {
             const followRes = await axios.put(`${backend_url}/users/${userId}/followandunfollow`, {
-                userId: currentUser?._id,
+                userId: currentUser?.user?._id,
             });
 
             console.log("follow res::", followRes)

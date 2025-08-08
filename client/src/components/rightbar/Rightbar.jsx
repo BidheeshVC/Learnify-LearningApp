@@ -31,7 +31,7 @@ export default function Rightbar({ profile }) {
 
         // filter out the current user and sort by last online time
         const filteredUsers = res.data.filter(
-          (u) => u._id !== currentUser?._id
+          (u) => u._id !== currentUser?.user?._id
         )
         // console.log("filtered users list::", filteredUsers)
         setUserDetails(filteredUsers);

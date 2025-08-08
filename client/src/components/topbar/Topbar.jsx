@@ -65,8 +65,8 @@ export default function Topbar() {
                 {/* <Link to={`/profile/`}> */}
                 <Link to="/profile" state={{ post: currentUser }}>
                     <img
-                        src={currentUser?.profilePicture
-                            ? currentUser?.profilePicture
+                        src={currentUser?.user?.profilePicture
+                            ? currentUser?.user?.profilePicture
                             : PF + "/persons/person2.jpeg"}
                         alt=""
                         className="topbarImg"

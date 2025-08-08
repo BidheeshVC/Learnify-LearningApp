@@ -9,6 +9,7 @@ import './index.css'; // or './App.css'
 import SavedPost from './components/savedPosts/SavedPost'
 import SavePostPage from './pages/savePosts/SavePostPage'
 import CoursesPage from './pages/courses/CoursesPage'
+import GroupsPage from './pages/groups/GroupsPage'
 
 
 
@@ -35,6 +36,8 @@ const App = () => {
           <Route path={`/savedposts`} element={<SavePostPage/>} />
 
           <Route path={`/courses`} element={<CoursesPage/>} />
+
+          <Route path={`/groups`} element={<GroupsPage/>} />
         </Routes>
       </Router>
     </>

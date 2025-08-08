@@ -7,11 +7,11 @@ const User = require("../../models/User");
 const createComment = async (req, res) => {
 
     const postId = req.params.postId;
-    // console.log("Creating comment for post ID:------------------------------", postId);
+    console.log("Creating comment for post ID:------------------------------", postId);
 
 
     const { userId, text } = req.body;
-    // console.log("User ID:", userId, "Text:", text);
+    console.log("User ID:", userId, "Text:", text);
 
     if (!userId || !postId || !text) {
         return res.status(400).json({ error: "User ID and text are required." });

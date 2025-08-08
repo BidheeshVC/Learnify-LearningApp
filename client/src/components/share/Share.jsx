@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Share({ triggerRefresh }) {
     const { currentUser } = useContext(AuthContext);
     console.log("currentUser in share component: ", currentUser);
+    console.log("currentUserpic in share component: ", currentUser?.user?.profilePicture);
     const desc = useRef("");
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -202,12 +203,13 @@ export default function Share({ triggerRefresh }) {
             showToast("Error creating post", "error");
         }
     };
+    
 
     return (
         <div className="share">
             <div className="shareWrapper">
                 <div className="shareTop">
-                    <img className="shareProfileImg" src={PF + currentUser?.user?.profilePicture
+                    <img className="shareProfileImg" src={currentUser?.user?.profilePicture
                         || "/assets/person/noAvatar.png"} alt="" />
                     <div className="shareUserInfo">
                         <span className="shareUsername">{currentUser?.user?.username}</span>

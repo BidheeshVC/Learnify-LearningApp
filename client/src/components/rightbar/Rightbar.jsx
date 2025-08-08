@@ -73,20 +73,20 @@ export default function Rightbar({ profile }) {
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">email:</span>
-            <span className="rightbarInfoValue">{currentUser?.email}</span>
+            <span className="rightbarInfoValue">{currentUser?.user?.email}</span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">IsAdmin:</span>
-            <span className="rightbarInfoValue">{currentUser?.isAdmin ? "Admin" : "User"} </span>
+            <span className="rightbarInfoValue">{currentUser?.user?.isAdmin ? "Admin" : "User"} </span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">User Since:</span>
-            <span className="rightbarInfoValue">{format(currentUser?.createdAt)}</span>
+            <span className="rightbarInfoValue">{format(currentUser?.user?.createdAt)}</span>
           </div>
         </div>
         <h4 className="rightbarTitle">User followers</h4>
         <div className="rightbarFollowings">
-          {currentUser?.followers?.map((follower) => (
+          {currentUser?.user?.followers?.map((follower) => (
             <div className="rightbarFollowing">
               <img
                 src={PF + "persons/person1.jpeg"}

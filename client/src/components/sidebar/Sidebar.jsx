@@ -34,10 +34,13 @@ export default function Sidebar() {
                         <PlayCircleFilledOutlinedIcon className="sidebarIcon" />
                         <span className="sidebarListItemText">Videos</span>
                     </li>
+                    <Link to="/groups">
+
                     <li className="sidebarListItem">
                         <GroupIcon className="sidebarIcon" />
                         <span className="sidebarListItemText">Groups</span>
                     </li>
+                    </Link>
                     <Link to="/savedposts">
                         <li className="sidebarListItem">
                             <BookmarkIcon className="sidebarIcon" />
@@ -56,7 +59,7 @@ export default function Sidebar() {
                         <EventIcon className="sidebarIcon" />
                         <span className="sidebarListItemText">Events</span>
                     </li>
-                    <Link to="courses">
+                    <Link to="/courses">
                         <li className="sidebarListItem">
                             <SchoolIcon className="sidebarIcon" />
                             <span className="sidebarListItemText">Courses</span>

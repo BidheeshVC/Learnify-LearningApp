@@ -11,6 +11,8 @@
     const authRoute = require("./routes/auth");
     const PostRoute = require("./routes/post");
     const CommentRoute = require("./routes/comment");
+    const courseRoute = require("./routes/course");
+    
 
     // Load environment variables first!
     dotenv.config();
@@ -96,6 +98,8 @@
     app.use("/api/auth", authRoute);
     app.use("/api/posts", PostRoute);
     app.use("/api/comments", CommentRoute);
+    app.use("/api/courses", courseRoute);
+    
 
     // Routes
     app.get("/", (req, res) => {

@@ -3,61 +3,8 @@ import { Star, Clock, Users, ChevronRight } from 'lucide-react';
 import './Courses.css';
 import Topbar from '../../topbar/Topbar';
 
-// const courses = [
-//     {
-//         name: "React for Beginners",
-//         title: "Learn the fundamentals of React.js from scratch",
-//         image: "https://source.unsplash.com/featured/?react,code",
-//         price: 0,
-//         category: "Web Development",
-//         rating: 4.8,
-//         duration: "4 weeks",
-//         students: 3200,
-//     },
-//     {
-//         name: "Mastering Node.js",
-//         title: "Build scalable backend apps with Node.js and Express",
-//         image: "https://source.unsplash.com/featured/?nodejs,backend",
-//         price: 59.99,
-//         category: "Backend Development",
-//         rating: 4.7,
-//         duration: "6 weeks",
-//         students: 4100,
-//     },
-//     {
-//         name: "UI/UX Design Bootcamp",
-//         title: "Design stunning user interfaces and seamless user experiences",
-//         image: "https://source.unsplash.com/featured/?design,uiux",
-//         price: 39.99,
-//         category: "Design",
-//         rating: 4.6,
-//         duration: "5 weeks",
-//         students: 2750,
-//     },
-//     {
-//         name: "Python for Data Science",
-//         title: "Analyze data and build ML models with Python",
-//         image: "https://source.unsplash.com/featured/?python,data",
-//         price: 0,
-//         category: "Data Science",
-//         rating: 4.9,
-//         duration: "8 weeks",
-//         students: 6800,
-//     },
-//     {
-//         name: "Full-Stack Web Dev",
-//         title: "Learn MERN stack and build full-stack applications",
-//         image: "https://source.unsplash.com/featured/?fullstack,developer",
-//         price: 79.99,
-//         category: "Web Development",
-//         rating: 4.8,
-//         duration: "10 weeks",
-//         students: 5300,
-//     }
 
-//     // Add more courses as needed
 
-// ];
 const courses = [
     {
         name: "React for Beginners",

@@ -9,7 +9,7 @@ const courses = [
     {
         name: "React for Beginners",
         title: "Learn the fundamentals of React.js from scratch",
-        image: "https://source.unsplash.com/featured/?react,code",
+        image: "https://ixorasolution.com/wp-content/uploads/React.js-for-beginners.jpg",
         price: 0,
         category: "Web Development",
         rating: 4.8,
@@ -19,7 +19,7 @@ const courses = [
     {
         name: "Mastering Node.js",
         title: "Build scalable backend apps with Node.js and Express",
-        image: "https://source.unsplash.com/featured/?nodejs,backend",
+        image: "https://miro.medium.com/v2/resize:fit:1400/1*rC5I3G2F8PJcspg1nxdVTQ.png",
         price: 59.99,
         category: "Backend Development",
         rating: 4.7,
@@ -29,7 +29,7 @@ const courses = [
     {
         name: "UI/UX Design Bootcamp",
         title: "Design stunning user interfaces and seamless user experiences",
-        image: "https://source.unsplash.com/featured/?design,uiux",
+        image: "https://sprintscdn-fnh2cugtb8a4deba.z02.azurefd.net/production/store/90058138/1737390237678e789d8b715.png",
         price: 39.99,
         category: "Design",
         rating: 4.6,
@@ -39,7 +39,7 @@ const courses = [
     {
         name: "Python for Data Science",
         title: "Analyze data and build ML models with Python",
-        image: "https://source.unsplash.com/featured/?python,data",
+        image: "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20230318230239/Python-Data-Science-Tutorial.jpg",
         price: 0,
         category: "Data Science",
         rating: 4.9,
@@ -49,7 +49,7 @@ const courses = [
     {
         name: "Full-Stack Web Dev",
         title: "Learn MERN stack and build full-stack applications",
-        image: "https://source.unsplash.com/featured/?fullstack,developer",
+        image: "https://www.mergesociety.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdhgjhspsp%2Fimage%2Fupload%2Fv1747557411%2Ffullstack_sioshn.png&w=1200&q=75",
         price: 79.99,
         category: "Web Development",
         rating: 4.8,
@@ -59,7 +59,7 @@ const courses = [
     {
         name: "Intro to TypeScript",
         title: "Strongly-type your JavaScript with TypeScript",
-        image: "https://source.unsplash.com/featured/?typescript,code",
+        image: "https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ffau508bzl2884y83afj1.png",
         price: 19.99,
         category: "Web Development",
         rating: 4.5,
@@ -69,7 +69,7 @@ const courses = [
     {
         name: "Advanced CSS Techniques",
         title: "Master Flexbox, Grid, animations, and responsive design",
-        image: "https://source.unsplash.com/featured/?css,design",
+        image: "https://res.cloudinary.com/dz209s6jk/image/upload/v1718110916/LearningPaths/oexupgyyuusnkigeifms.jpg",
         price: 24.99,
         category: "Design",
         rating: 4.7,
@@ -79,7 +79,7 @@ const courses = [
     {
         name: "DevOps Fundamentals",
         title: "Learn CI/CD, Docker, Kubernetes, and cloud deployments",
-        image: "https://source.unsplash.com/featured/?devops,docker",
+        image: "https://media.geeksforgeeks.org/wp-content/uploads/20230410112114/DevOps.png",
         price: 69.99,
         category: "DevOps",
         rating: 4.6,
@@ -89,7 +89,7 @@ const courses = [
     {
         name: "Mobile App Development with Flutter",
         title: "Build cross-platform apps with Flutter and Dart",
-        image: "https://source.unsplash.com/featured/?flutter,mobile",
+        image: "https://2softsoftware.com/wp-content/uploads/2025/04/flutter-Development-2Soft-Software.webp",
         price: 49.99,
         category: "Mobile Development",
         rating: 4.7,
@@ -99,7 +99,7 @@ const courses = [
     {
         name: "Java Programming Mastery",
         title: "Complete guide to Java development from basics to advanced",
-        image: "https://source.unsplash.com/featured/?java,programming",
+        image: "https://www.dicslaxminagar.com/blog/wp-content/uploads/2024/10/sale-301982-article-image-1630523474787.jpeg",
         price: 29.99,
         category: "Programming",
         rating: 4.5,
@@ -109,7 +109,7 @@ const courses = [
     {
         name: "Database Design & SQL",
         title: "Learn relational databases and master SQL queries",
-        image: "https://source.unsplash.com/featured/?sql,database",
+        image: "https://media.geeksforgeeks.org/wp-content/uploads/20240527162229/Database-Design-.webp",
         price: 34.99,
         category: "Database",
         rating: 4.6,
@@ -119,7 +119,7 @@ const courses = [
     {
         name: "Machine Learning with TensorFlow",
         title: "Train and deploy machine learning models using TensorFlow",
-        image: "https://source.unsplash.com/featured/?tensorflow,ml",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAlCQdXFBzSlWjkIuW7DaIMZFhBf3vcOgk9A&s",
         price: 89.99,
         category: "Data Science",
         rating: 4.9,
@@ -129,7 +129,7 @@ const courses = [
     {
         name: "Cybersecurity Essentials",
         title: "Understand the fundamentals of digital security",
-        image: "https://source.unsplash.com/featured/?cybersecurity,network",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoZqHUhXsp6dq1Dhj5CfuScq8dohDEZgDWHQ&s",
         price: 44.99,
         category: "Security",
         rating: 4.4,
@@ -139,7 +139,7 @@ const courses = [
     {
         name: "Intro to Cloud Computing",
         title: "Understand the basics of AWS, Azure, and Google Cloud",
-        image: "https://source.unsplash.com/featured/?cloud,computing",
+        image: "https://media.licdn.com/dms/image/v2/D4D12AQE-taKuq6JCew/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1691564771764?e=2147483647&v=beta&t=VeTrK2IkAX6kO0B-5C1NKdV_V7-oykMgeos8j_3EsVs",
         price: 29.99,
         category: "Cloud",
         rating: 4.5,
@@ -149,7 +149,7 @@ const courses = [
     {
         name: "Digital Marketing 101",
         title: "Learn SEO, content marketing, PPC, and more",
-        image: "https://source.unsplash.com/featured/?marketing,digital",
+        image: "https://www.atomicmkt.com/wp-content/uploads/2020/01/digital.jpg",
         price: 0,
         category: "Marketing",
         rating: 4.3,

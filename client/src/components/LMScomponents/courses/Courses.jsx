@@ -2,6 +2,9 @@ import React from 'react';
 import { Star, Clock, Users, ChevronRight } from 'lucide-react';
 import './Courses.css';
 import Topbar from '../../topbar/Topbar';
+import { useContext } from 'react';
+import { AuthContext } from '../../../context/AuthContext';
+
 
 
 
@@ -159,7 +162,14 @@ const courses = [
 ];
 
 
+
+
 export default function Courses() {
+
+        const { currentUser } = useContext(AuthContext);
+        console.log("Current user in Courses component:", currentUser);
+        
+
     return (
         <>
             <Topbar />

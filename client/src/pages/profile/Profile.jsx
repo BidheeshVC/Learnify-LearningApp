@@ -18,7 +18,7 @@ import './profile.css';
 // Constants
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:4000/api';
 const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
-const DEFAULT_COVER_IMAGE = `${PUBLIC_FOLDER}person/noCover.png`;
+const DEFAULT_COVER_IMAGE = `${PUBLIC_FOLDER}persons/person1.jpeg`;
 
 /**
  * Profile Component - Displays user profile with posts, follow functionality, and edit capabilities
